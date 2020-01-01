@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="ahoy" type="id"/>
+    <item name="matElem" type="id"/>
+    <item name="proto_scrollview" type="id"/>
+</resources>

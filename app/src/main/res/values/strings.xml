@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">HelloW</string>
+    <string name="title_activity_matrix_creation">MatrixCreationActivity</string>
+</resources>

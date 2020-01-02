@@ -9,10 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.hellow.OperationEnum;
 import com.example.hellow.R;
-import com.example.hellow.SelectionType;
+import com.example.hellow.SelectiontypeEnum;
 import com.example.hellow.adapters.MatrixSelectionAdapter;
-import com.example.hellow.adapters.ViewMatricesAdapter;
 import com.example.hellow.sqlite.DBManager;
 import com.example.hellow.sqlite.Matrix;
 
@@ -32,14 +32,11 @@ public class MatrixSelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SelectionType selectionType = SelectionType.fromInt(
-                this.getIntent().getIntExtra(CalculationActivity.EXTRA_SELECTIONTYPE, 1)
-        );
-
-        //RecyclerView recycler_MatA;
-        //RecyclerView recycler_MatB = null;
-
-        if(selectionType == SelectionType.SINGLE){
+        // get selectiontype
+        OperationEnum operation = (OperationEnum) this.getIntent().getSerializableExtra(CalculationActivity.EXTRA_OPERATION);
+        SelectiontypeEnum selectionType = operation.getOperands();
+        // set contentview according to selectiontype
+        if(selectionType == SelectiontypeEnum.SINGLE){
             setContentView(R.layout.activity_matrix_selection_single);
         } else {
             setContentView(R.layout.activity_matrix_selection_double);
@@ -52,7 +49,7 @@ public class MatrixSelectionActivity extends AppCompatActivity {
         data = dbManager.fetch2();
         dbManager.close();
 
-
+        // init recyclers
         recycler_MatA = (RecyclerView) findViewById(R.id.select_A);
         recycler_MatA.setLayoutManager(new LinearLayoutManager(this));
         recycler_MatA.setAdapter(new MatrixSelectionAdapter(data, this));
@@ -60,47 +57,44 @@ public class MatrixSelectionActivity extends AppCompatActivity {
             recycler_MatB.setLayoutManager(new LinearLayoutManager(this));
             recycler_MatB.setAdapter(new MatrixSelectionAdapter(data, this));
         }
-
-
-
-
-        /*switch(selectionType){
-            case SINGLE:
-                setContentView(R.layout.activity_matrix_selection_single);
-                break;
-            case TWO:
-                setContentView(R.layout.activity_matrix_selection_double);
-
-                break;
-            case SCALAR:
-                setContentView(R.layout.activity_matrix_selection_double);
-                break;
-        }*/
-
-
-        //finish();
     }
 
+    /*
+    * callbacks for buttons 'ok' and 'cancel'
+    * */
     public void onButtonClicked(View button){
         switch(button.getId()){
+            // button 'ok'
             case R.id.select_button_ok:
-                // ...
-
-                int selectedIndex = ((MatrixSelectionAdapter) recycler_MatA.getAdapter()).getSelectedMatrixPosition();
-                if(selectedIndex != -1){
-                    Bundle results = setResults(data[selectedIndex].getData());
-
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtras(results);
-                    setResult(Activity.RESULT_OK, returnIntent);
-
-
+                // prepare resultbundle
+                Bundle results = new Bundle();
+                // set selected Matrix A
+                int selectedIndex_A = ((MatrixSelectionAdapter) recycler_MatA.getAdapter()).getSelectedMatrixPosition();
+                if(selectedIndex_A != -1){
+                    results.putSerializable(EXTRA_RETURN_A, data[selectedIndex_A].getData());
                 }
+                // set selected Matrix B - if possible
+                if(recycler_MatB != null){
+                    int selectedIndex_B = ((MatrixSelectionAdapter) recycler_MatB.getAdapter()).getSelectedMatrixPosition();
+                    if(selectedIndex_B != -1){
+                        results.putSerializable(EXTRA_RETURN_B, data[selectedIndex_B].getData());
+                    }
+                }
+                // set selected operation
+                OperationEnum operation = (OperationEnum) this.getIntent().getSerializableExtra(CalculationActivity.EXTRA_OPERATION);
+                results.putSerializable(CalculationActivity.EXTRA_OPERATION, operation);
+
+                // prepare intent and return
+                Intent returnIntent = new Intent();
+                returnIntent.putExtras(results);
+                setResult(Activity.RESULT_OK, returnIntent);
                 finish();
                 break;
             case R.id.select_button_cancel:
-                    break;
-
+                // return without results
+                setResult(Activity.RESULT_CANCELED);
+                finish();
+                break;
         }
     }
 
@@ -118,7 +112,7 @@ public class MatrixSelectionActivity extends AppCompatActivity {
 
 
 
-    private Bundle generateReturn(SelectionType selectType){
+    private Bundle generateReturn(SelectiontypeEnum selectType){
 
         Bundle results = new Bundle();
 

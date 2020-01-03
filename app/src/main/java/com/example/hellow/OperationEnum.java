@@ -21,7 +21,7 @@ public enum OperationEnum {
     INVERT(101, 'I', SelectiontypeEnum.SINGLE, R.id.calculation_invert),
     DETERMINANT(102, 'D', SelectiontypeEnum.SINGLE, R.id.calculation_determinant),
     RANK(103, 'R', SelectiontypeEnum.SINGLE, R.id.calculation_rank),
-    TO_POWER(104, '^', SelectiontypeEnum.SINGLE, R.id.calculation_topower),
+    TO_POWER(104, '^', SelectiontypeEnum.SCALAR, R.id.calculation_topower),
 
     ;
 

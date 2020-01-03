@@ -7,6 +7,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.ejml.data.DMatrixRMaj;
+
 public class Helper {
 
     /*
@@ -58,4 +60,27 @@ public class Helper {
 
 
     }
+
+    public static double[][] intMat_to_doubleMat(int[][] data){
+        double[][] result = new double[data.length][data[0].length];
+        for(int i = 0; i < data.length; i++){
+            for(int j = 0; j < data[0].length; j++){
+                result[i][j] = data[i][j];
+            }
+        }
+        return result;
+    }
+
+    public static int[][] mat_to_2dArray(DMatrixRMaj mat){
+        int rows = mat.numRows;
+        int cols = mat.numCols;
+        int[][] result = new int[rows][cols];
+        for(int row = 0; row < rows; row++){
+            for(int col = 0; col < cols; col++){
+                result[row][col] = (int) mat.getData()[cols * row + col];
+            }
+        }
+        return result;
+    }
+
 }

@@ -9,12 +9,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hellow.Helper;
 import com.example.hellow.OperationEnum;
 import com.example.hellow.R;
 import com.example.hellow.SelectiontypeEnum;
 
+import org.ejml.data.DMatrixRMaj;
+import org.ejml.dense.row.CommonOps_DDRM;
+import org.ejml.dense.row.MatrixFeatures_DDRM;
 import org.ejml.simple.SimpleMatrix;
 
 public class CalculationActivity extends AppCompatActivity {
@@ -47,11 +51,66 @@ public class CalculationActivity extends AppCompatActivity {
 
     public void doCalculation(View button){
         int[][] result;
-        //result = libraray.doOp(matA, MatB, operation);
-        SimpleMatrix S;
-        result = new int[][]{
-                {0}
-        };
+
+        DMatrixRMaj matA = new DMatrixRMaj(Helper.intMat_to_doubleMat(this.matrix_A));
+        DMatrixRMaj matB = null;
+        if(this.currentOperation.getOperands() != SelectiontypeEnum.SINGLE){
+             matB = new DMatrixRMaj(Helper.intMat_to_doubleMat(this.matrix_B));
+        }
+        DMatrixRMaj matR = prepareResultmatrix(this.currentOperation, matA, matB);
+        if(matR == null){
+            return;
+        }
+
+        switch(this.currentOperation){
+            // rows, cols must match
+            case ADD:
+                CommonOps_DDRM.add(matA,matB,matR);
+                break;
+            case SUBTRACT:
+                CommonOps_DDRM.subtract(matA,matB,matR);
+                break;
+            // sthm must match
+            case MULTIPLY:
+                // assert a.numcols == b.numrows
+                int resRows = matA.numRows;
+                int resCols = matB.numCols;
+                CommonOps_DDRM.mult(matA,matB,matR);
+                break;
+            // B must be scalar/1x1
+            case SCALE:
+                CommonOps_DDRM.scale(this.matrix_B[0][0], matA, matR);
+                break;
+            case TRANSPOSE:
+                CommonOps_DDRM.transpose(matA, matR);
+                break;
+            // must check invertible
+            case INVERT:
+                CommonOps_DDRM.invert(matA, matR);
+                break;
+
+            case DETERMINANT:
+                double det = CommonOps_DDRM.det(matA);
+                matR.set(0, 0, det);
+                break;
+            case RANK:
+                double rank = MatrixFeatures_DDRM.rank(matA);
+                matR.set(0, 0, rank);
+                break;
+            // A must be quadratic, B 1x1
+            case TO_POWER:
+                double n = this.matrix_B[0][0];
+                matR = matA.copy();
+                for(int i = 0; i < n - 1; i++){
+                    DMatrixRMaj tmp = matR.copy();
+                    CommonOps_DDRM.mult(tmp, matA, matR);
+                }
+                //matR = res;
+                break;
+        }
+
+
+        result = Helper.mat_to_2dArray(matR);
         this.matrix_Result = result;
 
         TableLayout table_matResult = (TableLayout) findViewById(R.id.calculation_R);
@@ -59,6 +118,83 @@ public class CalculationActivity extends AppCompatActivity {
 
         TextView tv_resultSymbol = (TextView) findViewById(R.id.calculation_equals);
         tv_resultSymbol.setText("" + '=');
+    }
+
+    /*
+    * Asserts dimensions of operands match operation and returns Matrix to hold result.
+    * If dims do not match operation, displays message onscreen and returns null;
+    * */
+    private DMatrixRMaj prepareResultmatrix(OperationEnum operation, DMatrixRMaj matA, DMatrixRMaj matB){
+
+        switch(operation){
+            // dims identical
+            case ADD:
+            case SUBTRACT:
+                if( (matA.numCols != matB.numCols) || (matA.numRows != matB.numRows) ) {
+                    displayMessage("add/sub dims mismatch");
+                    return null;
+                }
+                return new DMatrixRMaj(matA.numRows, matA.numCols);
+               // break;
+            // a.rows = b.cols
+            // r.rows = a.rows, r.cols = b.cols
+            case MULTIPLY:
+                if(matA.numRows != matB.numCols){
+                    displayMessage("mult dims mismatch");
+                    return null;
+                }
+                return new DMatrixRMaj(matA.numRows, matB.numCols);
+                //break;
+            // b.rows == b.cols == 1
+            // r.dims = a.dims
+            case SCALE:
+                if (matB.data.length > 1) {
+                    displayMessage("scale: b not a scalar");
+                    return null;
+                }
+                return new DMatrixRMaj(1, 1);
+            //break;
+            // r = a
+            case TRANSPOSE:
+                return new DMatrixRMaj(matA.numCols, matA.numRows);
+            case INVERT:
+                if (matA.numRows != matA.numCols) {
+                    displayMessage("Invert: A not square");
+                    return null;
+                }
+                return new DMatrixRMaj(matA.numRows, matA.numCols);
+           // break;
+            // a -> square
+            // r -> 1x1
+            case DETERMINANT:
+                if (matA.numRows != matA.numCols) {
+                    displayMessage("det: A not square");
+                    return null;
+                }
+                return new DMatrixRMaj(1, 1);
+            //break;
+            // r -> 1x1
+            case RANK:
+                return new DMatrixRMaj(1, 1);
+            //break;
+            // a -> square
+            case TO_POWER:
+                if (matA.numRows != matA.numCols) {
+                    displayMessage("pot: A not square");
+                    return null;
+                }
+                return new DMatrixRMaj(matA.numRows, matA.numCols);
+           // break;
+            default:
+                displayMessage("unkonwn operation");
+                return null;
+        }
+    }
+
+    private void displayMessage(String msg){
+        Log.e("asd", msg);
+        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     @Override

@@ -25,12 +25,12 @@ public class CalculationActivity extends AppCompatActivity {
 
     public final static String EXTRA_OPERATION = "extra_operation";
 
-    private int[][] matrix_A = null;
-    private int[][] matrix_B = null;
-    private int[][] matrix_Result = null;
+    private double[][] matrix_A = null;
+    private double[][] matrix_B = null;
+    private double[][] matrix_Result = null;
     private OperationEnum currentOperation = null;
 
-    private void updateDisplay(int[][] matA, int[][] matB, int[][] matResult, OperationEnum operation){
+    private void updateDisplay(double[][] matA, double[][] matB, double[][] matResult, OperationEnum operation){
 
         TableLayout table_matA = (TableLayout) findViewById(R.id.calculation_A);
         TableLayout table_matB = (TableLayout) findViewById(R.id.calculation_B);
@@ -50,12 +50,12 @@ public class CalculationActivity extends AppCompatActivity {
     }
 
     public void doCalculation(View button){
-        int[][] result;
+        double[][] result;
 
-        DMatrixRMaj matA = new DMatrixRMaj(Helper.intMat_to_doubleMat(this.matrix_A));
+        DMatrixRMaj matA = new DMatrixRMaj(this.matrix_A);
         DMatrixRMaj matB = null;
         if(this.currentOperation.getOperands() != SelectiontypeEnum.SINGLE){
-             matB = new DMatrixRMaj(Helper.intMat_to_doubleMat(this.matrix_B));
+             matB = new DMatrixRMaj(this.matrix_B);
         }
         DMatrixRMaj matR = prepareResultmatrix(this.currentOperation, matA, matB);
         if(matR == null){
@@ -261,8 +261,8 @@ public class CalculationActivity extends AppCompatActivity {
                 Log.e("onResult", "resultOk");
                 // this bundle contains: int[][] EXTRA_RETURN_A,EXTRA_RETURN_B; OperationEnum EXTRA_OPERATION
                 Bundle results = data.getExtras();
-                int[][] returned_A = (int[][]) results.get(MatrixSelectionActivity.EXTRA_RETURN_A);
-                int[][] returned_B = (int[][]) results.get(MatrixSelectionActivity.EXTRA_RETURN_B);
+                double[][] returned_A = (double[][]) results.get(MatrixSelectionActivity.EXTRA_RETURN_A);
+                double[][] returned_B = (double[][]) results.get(MatrixSelectionActivity.EXTRA_RETURN_B);
                 OperationEnum returned_operation = (OperationEnum) results.get(EXTRA_OPERATION);
 
                 // set variables

@@ -3,6 +3,7 @@ package com.example.hellow.sqlite;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -29,7 +30,7 @@ public class DBManager {
     public DBManager open(){
         matDBHelper = new MatDBHelper(context);
         database = matDBHelper.getWritableDatabase();
-        //matDBHelper.onUpgrade(database, 1, 1);
+       // matDBHelper.onUpgrade(database, 1, 1);
         return this;
     }
 
@@ -50,7 +51,9 @@ public class DBManager {
         return is.readObject();
     }
 
-    public void insert(String name, int[][] data){
+
+    public void insert(String name, double[][] data){
+
         // serialize array to bytes
         byte[] serializedData = new byte[0];
         try {
@@ -58,46 +61,117 @@ public class DBManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        int isScalar = (data.length == 1 && data[0].length == 1) ? 1 : 0;
+
         // put values
         ContentValues content = new ContentValues();
         content.put(matDBHelper.NAME, name);
         content.put(matDBHelper.DATA, serializedData);
+        content.put(matDBHelper.IS_SCALAR, isScalar);
+
+
         database.insert(MatDBHelper.TABLE_NAME, null, content);
     }
 
-    public Cursor fetch(){
-        String[] cols = new String[] {MatDBHelper.ID, MatDBHelper.NAME, MatDBHelper.DATA,};
+    /*
+    * select all rows with all cols and return cursor.
+    * */
+    private Cursor fetchAll(){
+        String[] cols = new String[] {MatDBHelper.ID, MatDBHelper.NAME, MatDBHelper.DATA, MatDBHelper.IS_SCALAR};
         Cursor cursor = database.query(MatDBHelper.TABLE_NAME, cols, null, null, null, null, null);
-        if(cursor != null){
-            cursor.moveToFirst();
-        }
         return cursor;
     }
 
-    public Matrix[] fetch2(){
-        Cursor cursor = fetch();
-        //Matrix[] result = new Matrix[cursor.getCount()];
+    /*
+     * select only rows where isScalar == 1.
+     * */
+    private Cursor fetchScalars(){
+        String[] cols = new String[] {MatDBHelper.ID, MatDBHelper.NAME, MatDBHelper.DATA, MatDBHelper.IS_SCALAR};
+        Cursor cursor = database.query(MatDBHelper.TABLE_NAME, cols, MatDBHelper.IS_SCALAR + " = ", new String[]{1 + ""}, null, null, null);
+        return cursor;
+    }
+    /*
+     * select only rows where isScalar != 1.
+     * */
+    private Cursor fetchMatrices(){
+        String[] cols = new String[] {MatDBHelper.ID, MatDBHelper.NAME, MatDBHelper.DATA, MatDBHelper.IS_SCALAR};
+        Cursor cursor = database.query(MatDBHelper.TABLE_NAME, cols, MatDBHelper.IS_SCALAR + " != ", new String[]{1 + ""}, null, null, null);
+        return cursor;
+    }
+
+    /*
+     * For every Row in curor, builds Matrix-object and returns array thereof.
+     * */
+    private Matrix[] cursorToArray(Cursor cursor){
+        // build list of Matrix for every row
         List<Matrix> result = new ArrayList<>();
-        //int index = 0;
         while(cursor.moveToNext()){
+            // get values of current row
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(MatDBHelper.ID));
             String name = cursor.getString(cursor.getColumnIndexOrThrow(MatDBHelper.NAME));
             byte[] blob = cursor.getBlob(cursor.getColumnIndexOrThrow(MatDBHelper.DATA));
-            int[][] data = null;
+            // deserialize 2d-array from blob
+            double[][] data = null;
             try {
-                data = (int[][]) deserialize(blob);
+                data = (double[][]) deserialize(blob);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-          //  result[index] = new Matrix(id, name, data);
-            //index++;
-            result.add(new Matrix(id, name, data));
+
+            boolean isScalar = cursor.getInt(cursor.getColumnIndexOrThrow(MatDBHelper.IS_SCALAR)) == 1;
+            result.add(new Matrix(id, name, data, isScalar));
         }
+        cursor.close();
         return result.toArray(new Matrix[result.size()]);
     }
 
+    /*
+    * Returns array of Every Matrix and Scalar in DB
+    * */
+    public Matrix[] getAll(){
+        Cursor cursor = fetchAll();
+        return cursorToArray(cursor);
+    }
+    /*
+    * Returns array of Every Scalar in DB
+    * */
+    public Matrix[] getScalars(){
+        Cursor cursor = fetchScalars();
+        return cursorToArray(cursor);
+    }
+    /*
+     * Returns array of Every Matrix in DB (without scalars)
+     * */
+    public Matrix[] getMatrices(){
+        Cursor cursor = fetchMatrices();
+        return cursorToArray(cursor);
+    }
+
+    /*
+    * Returns true if a Matrix with the given name exists in DB.
+    * */
+    public boolean nameExists(String name){
+        String[] cols = new String[] {MatDBHelper.ID, MatDBHelper.NAME};
+        Cursor cursor = database.query(MatDBHelper.TABLE_NAME, cols, MatDBHelper.NAME + " = ?", new String[]{name + ""}, null, null, null);
+        if(cursor != null){
+            cursor.moveToFirst();
+        }
+        boolean result = cursor.getCount() != 0;
+        cursor.close();
+        return result;
+
+
+
+    }
+
+    /*
+    * todo: unused
+    *
+    * */
     public Cursor find(String name){
         String[] names = new String[] {name};
         String[] cols = new String[] {MatDBHelper.ID, MatDBHelper.NAME, MatDBHelper.DATA,};

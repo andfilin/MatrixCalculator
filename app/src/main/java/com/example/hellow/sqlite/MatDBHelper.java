@@ -13,14 +13,17 @@ public class MatDBHelper extends SQLiteOpenHelper {
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String DATA = "data";
+    public static final String IS_SCALAR = "is_scalar";
 
     public static final int VERSION = 1;
 
     private static final String CREATE_TABLE = "create table " + TABLE_NAME + "("
             + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + NAME + " TEXT NOT NULL, "
-            + DATA + " BLOB" +
-            ");";
+            + NAME + " TEXT UNIQUE, "
+            + DATA + " BLOB, "
+            + IS_SCALAR + " INTEGER"
+            + ");"
+            ;
 
 
 

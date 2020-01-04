@@ -1,7 +1,9 @@
 package com.example.hellow;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -9,12 +11,15 @@ import android.widget.TextView;
 
 import org.ejml.data.DMatrixRMaj;
 
+/*
+* various static helperfunctions
+* */
 public class Helper {
 
     /*
     * Update an TableLayout to display an int[][]
     * */
-    public static void fillTable(Context context, TableLayout table, int[][] matData){
+    public static void fillTable(Context context, TableLayout table, double[][] matData){
         // reset table
         table.removeAllViews();
         // if no data given, display empty matrix - for now, 3x3 Nullmatrix
@@ -27,7 +32,7 @@ public class Helper {
             };*/
         }
         // iterate rows of data
-        for(int[] matRow : matData){
+        for(double[] matRow : matData){
             // init tablerow, set params
             TableRow tr = new TableRow(context);
             tr.setLayoutParams(new TableLayout.LayoutParams(
@@ -35,7 +40,7 @@ public class Helper {
                     TableLayout.LayoutParams.MATCH_PARENT
             ));
             // iterate values of datarow
-            for(int matValue : matRow){
+            for(double matValue : matRow){
                 // append new textview to tablerow
                 TextView textview = new TextView(context);
                 textview.setText("" + matValue);
@@ -61,7 +66,7 @@ public class Helper {
 
     }
 
-    public static double[][] intMat_to_doubleMat(int[][] data){
+    /*public static double[][] intMat_to_doubleMat(int[][] data){
         double[][] result = new double[data.length][data[0].length];
         for(int i = 0; i < data.length; i++){
             for(int j = 0; j < data[0].length; j++){
@@ -69,18 +74,27 @@ public class Helper {
             }
         }
         return result;
-    }
+    }*/
 
-    public static int[][] mat_to_2dArray(DMatrixRMaj mat){
+    public static double[][] mat_to_2dArray(DMatrixRMaj mat){
         int rows = mat.numRows;
         int cols = mat.numCols;
-        int[][] result = new int[rows][cols];
+        double[][] result = new double[rows][cols];
         for(int row = 0; row < rows; row++){
             for(int col = 0; col < cols; col++){
-                result[row][col] = (int) mat.getData()[cols * row + col];
+                result[row][col] = mat.getData()[cols * row + col];
             }
         }
         return result;
+    }
+
+    /*
+     * converts deviceindependent 'dp'-unit to absolute pixels on this device
+     * */
+    public static int dpToPixels(float dp){
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        //float px = dp * (metrics.densityDpi / 160f);
+        return Math.round(dp * metrics.density);
     }
 
 }

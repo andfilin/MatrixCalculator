@@ -10,18 +10,18 @@ import java.util.Map;
 public enum OperationEnum {
     // instances
     //NONE(0, ' ', SelectiontypeEnum.SINGLE, R.id.calculation_transpose),
-    ADD(1, '+', SelectiontypeEnum.TWO, R.id.calculation_add),
-    SUBTRACT(2, '-', SelectiontypeEnum.TWO, R.id.calculation_subtract),
-    MULTIPLY(3, 'x', SelectiontypeEnum.TWO, R.id.calculation_multiply),
+    ADD(1, '+', "Add", SelectiontypeEnum.TWO, R.id.calculation_add),
+    SUBTRACT(2, '-', "Subtract", SelectiontypeEnum.TWO, R.id.calculation_subtract),
+    MULTIPLY(3, 'x', "Multiply", SelectiontypeEnum.TWO, R.id.calculation_multiply),
 
 
-    SCALE(10, 'x', SelectiontypeEnum.SCALAR, R.id.calculation_scale),
+    SCALE(10, 'x', "Scale", SelectiontypeEnum.SCALAR, R.id.calculation_scale),
 
-    TRANSPOSE(100, 'T', SelectiontypeEnum.SINGLE, R.id.calculation_transpose),
-    INVERT(101, 'I', SelectiontypeEnum.SINGLE, R.id.calculation_invert),
-    DETERMINANT(102, 'D', SelectiontypeEnum.SINGLE, R.id.calculation_determinant),
-    RANK(103, 'R', SelectiontypeEnum.SINGLE, R.id.calculation_rank),
-    TO_POWER(104, '^', SelectiontypeEnum.SCALAR, R.id.calculation_topower),
+    TRANSPOSE(100, 'T', "Transpose", SelectiontypeEnum.SINGLE, R.id.calculation_transpose),
+    INVERT(101, 'I', "Invert", SelectiontypeEnum.SINGLE, R.id.calculation_invert),
+    DETERMINANT(102, 'D', "Determinant", SelectiontypeEnum.SINGLE, R.id.calculation_determinant),
+    RANK(103, 'R', "Rank", SelectiontypeEnum.SINGLE, R.id.calculation_rank),
+    TO_POWER(104, '^', "To Power of", SelectiontypeEnum.SCALAR, R.id.calculation_topower),
 
     ;
 
@@ -29,6 +29,8 @@ public enum OperationEnum {
     private int value;
     // mathematical symbol, eg. '+'
     private char symbol;
+    // tostring
+    private String stringRep;
     // number of operands
     private SelectiontypeEnum operands;
     // id of corresponding button
@@ -47,9 +49,10 @@ public enum OperationEnum {
     }
 
     // private constructor
-    private OperationEnum(int value, char symbol, SelectiontypeEnum operands, int button){
+    private OperationEnum(int value, char symbol, String stringrep, SelectiontypeEnum operands, int button){
         this.value = value;
         this.symbol = symbol;
+        this.stringRep = stringrep;
         this.operands = operands;
         this.button = button;
     }
@@ -60,6 +63,9 @@ public enum OperationEnum {
     };
     public SelectiontypeEnum getOperands(){
         return operands;
+    }
+    public String toString(){
+        return stringRep;
     }
 
 

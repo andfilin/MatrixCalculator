@@ -54,7 +54,7 @@ public class ViewMatricesAdapter extends RecyclerView.Adapter<ViewMatricesAdapte
         return dataset.length;
     }
 
-    private void showPopup(String name, int[][] matData){
+    private void showPopup(String name, double[][] matData){
 
         View parent = ((Activity) this.context).findViewById(R.id.viewMatrices_recyclerview);
 

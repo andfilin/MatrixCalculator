@@ -22,7 +22,7 @@ public class ViewMatricesActivity extends AppCompatActivity {
         // get data
         DBManager dbManager = new DBManager(this);
         dbManager.open();
-        Matrix[] data = dbManager.fetch2();
+        Matrix[] data = dbManager.getAll();
         dbManager.close();
         Log.e("db", "fetchedsize: " + data.length);
 

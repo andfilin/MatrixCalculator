@@ -11,17 +11,15 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.HistoryActivity"></activity>
         <activity android:name=".activities.MatrixSelectionActivity" />
-        <activity android:name=".activities.CalculationActivity" />
-        <activity android:name=".activities.ViewMatricesActivity" />
-        <activity android:name=".activities.MatrixCreationActivity" />
-        <activity android:name=".activities.DisplayMatrixActivity" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.CalculationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.ViewMatricesActivity" />
+        <activity android:name=".activities.MatrixCreationActivity"
+            android:label="Neue Matrix"/>
     </application>
 
 </manifest>

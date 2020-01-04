@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MatrixCreationActivity">
+    tools:context=".activities.MatrixCreationActivity"
+
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    >
 
     <TextView
         android:id="@+id/textView4"
@@ -37,6 +41,7 @@
         android:ems="10"
         android:inputType="number"
         android:singleLine="true"
+        android:selectAllOnFocus="true"
         android:text="3"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/textView4"
@@ -51,6 +56,7 @@
         android:ems="10"
         android:inputType="number"
         android:text="3"
+        android:selectAllOnFocus="true"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="@+id/createM_input_rows" />
@@ -61,10 +67,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
-        android:onClick="onButtonClicked"
+        android:minHeight="1dp"
+        android:onClick="onApplyClicked"
         android:text="Anwenden"
         app:layout_constraintStart_toEndOf="@+id/createM_input_cols"
-        app:layout_constraintTop_toTopOf="@+id/createM_input_cols" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView3"
@@ -125,10 +132,22 @@
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
         android:ems="10"
+        android:hint="neue_matrix"
         android:inputType="textPersonName"
-        android:text="neue_matrix"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintHorizontal_bias="0.416"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:minHeight="1dp"
+        android:onClick="onScalarButtonClicked"
+        android:text="Skalar"
+        app:layout_constraintStart_toStartOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

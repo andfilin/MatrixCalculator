@@ -43,10 +43,14 @@ public class MatrixSelectionActivity extends AppCompatActivity {
             recycler_MatB = (RecyclerView) findViewById(R.id.select_B);
         }
 
+        // set title of activity to chosen operation
+        setTitle(operation.toString());
+
+
         // get data
         DBManager dbManager = new DBManager(this);
         dbManager.open();
-        data = dbManager.fetch2();
+        data = dbManager.getAll();
         dbManager.close();
 
         // init recyclers

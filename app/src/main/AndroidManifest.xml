@@ -9,17 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.HistoryActivity"></activity>
-        <activity android:name=".activities.MatrixSelectionActivity" />
-        <activity android:name=".activities.CalculationActivity">
+
+        <activity
+            android:name=".activities.HistoryActivity"
+            android:label="@string/title_historyActivity"/>
+            >
+        <activity
+            android:name=".activities.MatrixSelectionActivity"
+
+            />
+        <activity
+            android:name=".activities.CalculationActivity"
+            android:label="@string/title_calculationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ViewMatricesActivity" />
+        <activity
+            android:name=".activities.ViewMatricesActivity"
+            android:label="@string/title_viewActivity"/>
+            />
         <activity android:name=".activities.MatrixCreationActivity"
-            android:label="Neue Matrix"/>
+            android:label="@string/title_creationActivity"/>
     </application>
 
 </manifest>

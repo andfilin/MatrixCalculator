@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/select_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,8 +11,8 @@
         android:id="@+id/select_button_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onApplyClicked"
-        android:text="ok"
+        android:onClick="onButtonClicked"
+        android:text="@string/applySelection_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/select_guide_90" />
 
@@ -19,8 +20,8 @@
         android:id="@+id/select_button_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onApplyClicked"
-        android:text="cancel"
+        android:onClick="onButtonClicked"
+        android:text="@string/cancelSelection_button"
         app:layout_constraintStart_toEndOf="@+id/select_button_ok"
         app:layout_constraintTop_toTopOf="@+id/select_guide_90" />
 
@@ -76,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="19dp"
         android:layout_marginLeft="19dp"
-        android:text="Left Operand"
+        android:text="@string/label_leftoperand"
         app:layout_constraintBottom_toTopOf="@+id/select_A"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -84,7 +85,7 @@
         android:id="@+id/label_B"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Right Operand"
+        android:text="@string/label_rightoperand"
         app:layout_constraintBottom_toTopOf="@+id/select_B"
         app:layout_constraintStart_toStartOf="@+id/label_A" />
 </androidx.constraintlayout.widget.ConstraintLayout>

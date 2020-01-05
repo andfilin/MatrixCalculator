@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/create_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MatrixCreationActivity"
 
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    >
+    tools:context=".activities.MatrixCreationActivity">
 
     <TextView
         android:id="@+id/textView4"
@@ -17,7 +17,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
-        android:text="Zeilen:"
+        android:text="@string/chooseDimensions_rowslabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
-        android:text="Spalten:"
+        android:text="@string/chooseDimensions_colslabel"
         app:layout_constraintStart_toEndOf="@+id/createM_input_rows"
         app:layout_constraintTop_toTopOf="@+id/textView4" />
 
@@ -40,9 +40,8 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="number"
-        android:singleLine="true"
         android:selectAllOnFocus="true"
-        android:text="3"
+        android:singleLine="true"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +54,6 @@
         android:layout_marginLeft="10dp"
         android:ems="10"
         android:inputType="number"
-        android:text="3"
         android:selectAllOnFocus="true"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/textView5"
@@ -69,7 +67,7 @@
         android:layout_marginLeft="30dp"
         android:minHeight="1dp"
         android:onClick="onApplyClicked"
-        android:text="Anwenden"
+        android:text="@string/chooseDimensions_applyButton"
         app:layout_constraintStart_toEndOf="@+id/createM_input_cols"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,7 +108,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginBottom="10dp"
         android:onClick="onSaveButtonClicked"
-        android:text="Speichern"
+        android:text="@string/newMatrix_savebutton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
@@ -132,7 +130,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
         android:ems="10"
-        android:hint="neue_matrix"
+        android:hint="@string/newMatrix_hintname"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintHorizontal_bias="0.416"
@@ -146,7 +144,7 @@
 
         android:minHeight="1dp"
         android:onClick="onScalarButtonClicked"
-        android:text="Skalar"
+        android:text="@string/chooseDimensions_scalarButton"
         app:layout_constraintStart_toStartOf="@+id/button2"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
 

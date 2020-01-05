@@ -3,6 +3,8 @@ package com.example.hellow;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.icu.text.DecimalFormat;
+import android.icu.text.NumberFormat;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TableLayout;
@@ -11,26 +13,24 @@ import android.widget.TextView;
 
 import org.ejml.data.DMatrixRMaj;
 
+import java.util.Locale;
+
 /*
 * various static helperfunctions
 * */
 public class Helper {
 
     /*
-    * Update an TableLayout to display an int[][]
+    * Update an TableLayout to display an double[][]
     * */
     public static void fillTable(Context context, TableLayout table, double[][] matData){
         // reset table
         table.removeAllViews();
-        // if no data given, display empty matrix - for now, 3x3 Nullmatrix
+        // if no data given, display nothing
         if(matData == null){
             return;
-            /*matData = new int[][]{
-                    {0, 0, 0},
-                    {0, 0, 0},
-                    {0, 0, 0},
-            };*/
         }
+
         // iterate rows of data
         for(double[] matRow : matData){
             // init tablerow, set params
@@ -43,7 +43,10 @@ public class Helper {
             for(double matValue : matRow){
                 // append new textview to tablerow
                 TextView textview = new TextView(context);
-                textview.setText("" + matValue);
+                // make formatted String from double: up to 3 decimal points and no trailing zeros
+                String valueString = String.format(Locale.US, "%.3f", matValue).replaceAll("\\.?0*$", "");
+                textview.setText(valueString);
+
                 int fontsize = (int) context.getResources().getDimension(R.dimen.matrix_fontsize);
                 textview.setTextSize(fontsize);
 
@@ -65,16 +68,6 @@ public class Helper {
 
 
     }
-
-    /*public static double[][] intMat_to_doubleMat(int[][] data){
-        double[][] result = new double[data.length][data[0].length];
-        for(int i = 0; i < data.length; i++){
-            for(int j = 0; j < data[0].length; j++){
-                result[i][j] = data[i][j];
-            }
-        }
-        return result;
-    }*/
 
     public static double[][] mat_to_2dArray(DMatrixRMaj mat){
         int rows = mat.numRows;

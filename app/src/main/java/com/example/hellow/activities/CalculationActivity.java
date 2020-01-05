@@ -131,7 +131,7 @@ public class CalculationActivity extends AppCompatActivity {
             case ADD:
             case SUBTRACT:
                 if( (matA.numCols != matB.numCols) || (matA.numRows != matB.numRows) ) {
-                    displayMessage("add/sub dims mismatch");
+                    displayMessage(getResources().getString(R.string.addSub_wrongDims));
                     return null;
                 }
                 return new DMatrixRMaj(matA.numRows, matA.numCols);
@@ -140,7 +140,7 @@ public class CalculationActivity extends AppCompatActivity {
             // r.rows = a.rows, r.cols = b.cols
             case MULTIPLY:
                 if(matA.numRows != matB.numCols){
-                    displayMessage("mult dims mismatch");
+                    displayMessage(getResources().getString(R.string.mult_wrongDims));
                     return null;
                 }
                 return new DMatrixRMaj(matA.numRows, matB.numCols);
@@ -159,7 +159,7 @@ public class CalculationActivity extends AppCompatActivity {
                 return new DMatrixRMaj(matA.numCols, matA.numRows);
             case INVERT:
                 if (matA.numRows != matA.numCols) {
-                    displayMessage("Invert: A not square");
+                    displayMessage(getResources().getString(R.string.mustBeSquare));
                     return null;
                 }
                 return new DMatrixRMaj(matA.numRows, matA.numCols);
@@ -168,7 +168,7 @@ public class CalculationActivity extends AppCompatActivity {
             // r -> 1x1
             case DETERMINANT:
                 if (matA.numRows != matA.numCols) {
-                    displayMessage("det: A not square");
+                    displayMessage(getResources().getString(R.string.mustBeSquare));
                     return null;
                 }
                 return new DMatrixRMaj(1, 1);
@@ -180,7 +180,7 @@ public class CalculationActivity extends AppCompatActivity {
             // a -> square
             case TO_POWER:
                 if (matA.numRows != matA.numCols) {
-                    displayMessage("pot: A not square");
+                    displayMessage(getResources().getString(R.string.mustBeSquare));
                     return null;
                 }
                 return new DMatrixRMaj(matA.numRows, matA.numCols);

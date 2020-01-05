@@ -1,6 +1,7 @@
 package com.example.hellow.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,11 +29,16 @@ public class ViewMatricesActivity extends AppCompatActivity {
 
 
 
-
+        // prepare recyclerview
         RecyclerView rView = (RecyclerView) findViewById(R.id.viewMatrices_recyclerview);
         rView.setLayoutManager(new LinearLayoutManager(this));
 
+        // set adapter
         rView.setAdapter(new ViewMatricesAdapter(data, this));
+
+        // add decoration
+        DividerItemDecoration itemDecor = new DividerItemDecoration(rView.getContext(), DividerItemDecoration.VERTICAL);
+        rView.addItemDecoration(itemDecor);
 
     }
 

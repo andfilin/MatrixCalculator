@@ -7,6 +7,8 @@ public class Matrix {
     private String name;
     private double[][] data;
     private boolean isScalar;
+    private int rows;
+    private int cols;
 
     public int getId() {
         return id;
@@ -24,12 +26,21 @@ public class Matrix {
         return isScalar;
     }
 
+    public String dimensionsString(){
+        if(isScalar){
+            return "Skalar";
+        } else {
+            return rows + "x" + cols;
+        }
+    }
 
     public Matrix(int id, String name, double[][] data, boolean isScalar){
         this.id = id;
         this.name = name;
         this.data = data;
         this.isScalar = isScalar;
+        this.rows = data.length;
+        this.cols = data[0].length;
     }
 
 

@@ -108,7 +108,6 @@
                     android:id="@+id/calculation_op"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+"
 
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -139,14 +138,13 @@
                     android:id="@+id/calculation_equals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="="
 
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/calculation_B"
-
-
                     app:layout_constraintEnd_toStartOf="@+id/calculation_R"
+
+
+                    app:layout_constraintStart_toEndOf="@+id/calculation_B"
                     app:layout_constraintTop_toTopOf="parent"
 
 
@@ -181,8 +179,9 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/horizontalGuide">
@@ -197,7 +196,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="doCalculation"
-                android:text="DURCHFÜHREN!" />
+                android:text="@string/execute_calculation" />
         </TableRow>
 
         <TableRow
@@ -209,21 +208,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onOperationSelected"
-                android:text="Addieren" />
+                android:text="@string/opButton_add" />
 
             <Button
                 android:id="@+id/calculation_subtract"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onOperationSelected"
-                android:text="SUBTRAHIEREN" />
+                android:text="@string/opButton_sub" />
 
             <Button
                 android:id="@+id/calculation_multiply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onOperationSelected"
-                android:text="MULTIPLIZIEREN" />
+                android:text="@string/opButton_mult" />
         </TableRow>
 
         <TableRow
@@ -235,52 +234,49 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onOperationSelected"
-                android:text="SKALIEREN" />
+                android:text="@string/opButton_scale" />
 
             <Button
                 android:id="@+id/calculation_transpose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onOperationSelected"
-                android:text="Transponieren" />
+                android:text="@string/opButton_transpose" />
 
             <Button
                 android:id="@+id/calculation_invert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onOperationSelected"
-                android:text="INVERTIEREN" />
+                android:text="@string/opButton_invert" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <Button
                 android:id="@+id/calculation_determinant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onOperationSelected"
-                android:text="DETERMINANTE" />
+                android:text="@string/opButton_determinant" />
 
             <Button
                 android:id="@+id/calculation_rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onOperationSelected"
-                android:text="RANG" />
+                android:text="@string/opButton_rank" />
 
             <Button
                 android:id="@+id/calculation_topower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onOperationSelected"
-                android:text="POTENZIEREN" />
+                android:text="@string/opButton_toPower" />
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </TableLayout>
 
     <Button
@@ -288,7 +284,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="navigateButton"
-        android:text="Speicher"
+        android:text="@string/viewButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -297,7 +293,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="navigateButton"
-        android:text="Neu"
+        android:text="@string/newButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/calculation_openViewMatrices" />
 
@@ -306,7 +302,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="navigateButton"
-        android:text="Chronik"
+        android:text="@string/historyButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/calculation_openCreateMatrix" />
 

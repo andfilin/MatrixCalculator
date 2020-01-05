@@ -1,6 +1,7 @@
 package com.example.hellow.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,7 +45,8 @@ public class MatrixSelectionActivity extends AppCompatActivity {
         }
 
         // set title of activity to chosen operation
-        setTitle(operation.toString());
+        int titleId = getResources().getIdentifier(operation.getStringResourceName(), "string", getPackageName());
+        setTitle(getResources().getString(titleId));
 
 
         // get data
@@ -57,9 +59,13 @@ public class MatrixSelectionActivity extends AppCompatActivity {
         recycler_MatA = (RecyclerView) findViewById(R.id.select_A);
         recycler_MatA.setLayoutManager(new LinearLayoutManager(this));
         recycler_MatA.setAdapter(new MatrixSelectionAdapter(data, this));
+        DividerItemDecoration itemDecorA = new DividerItemDecoration(recycler_MatA.getContext(), DividerItemDecoration.VERTICAL);
+        recycler_MatA.addItemDecoration(itemDecorA);
         if(recycler_MatB != null){
             recycler_MatB.setLayoutManager(new LinearLayoutManager(this));
             recycler_MatB.setAdapter(new MatrixSelectionAdapter(data, this));
+            DividerItemDecoration itemDecorB = new DividerItemDecoration(recycler_MatB.getContext(), DividerItemDecoration.VERTICAL);
+            recycler_MatB.addItemDecoration(itemDecorB);
         }
     }
 

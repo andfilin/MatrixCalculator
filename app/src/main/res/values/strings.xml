@@ -1,4 +1,66 @@
 <resources>
     <string name="app_name">HelloW</string>
     <string name="title_activity_matrix_creation">MatrixCreationActivity</string>
+    <!-- Activitytitles-->
+    <string name="title_calculationActivity">Rechnen</string>
+    <string name="title_creationActivity">Neue Matrix</string>
+    <string name="title_viewActivity">Speicher</string>
+    <string name="title_historyActivity">Chronik</string>
+
+    <!-- CalculationActivity -->
+    <string name="execute_calculation">Ausführen</string>
+        <!-- Operations-buttons -->
+    <string name="opButton_add">ADD</string>
+    <string name="opButton_sub">SUB</string>
+    <string name="opButton_mult">MULT</string>
+    <string name="opButton_scale">SKAL</string>
+    <string name="opButton_transpose">TRANSP</string>
+    <string name="opButton_invert">INV</string>
+    <string name="opButton_determinant">DET</string>
+    <string name="opButton_rank">RANG</string>
+    <string name="opButton_toPower">POT</string>
+        <!-- Navigation-buttons-->
+    <string name="viewButton">SPEICHER</string>
+    <string name="newButton">NEU</string>
+    <string name="historyButton">CHRONIK</string>
+        <!-- Fehlermeldungen -->
+    <string name="addSub_wrongDims">Dimensionen müssen identisch sein</string>
+    <string name="mult_wrongDims">Zeilenzahl Links und Spaltenzahl Rechts müssen identisch sein</string>
+    <string name="mustBeSquare">Matrix muss quadratisch sein</string>
+
+
+    <!-- MatrixSelectionActivity -->
+        <!-- Operations ausgeschrieben == Titel-->
+    <string name="op_add">Addieren</string>
+    <string name="op_sub">Subtrahieren</string>
+    <string name="op_mult">Multiplizieren</string>
+    <string name="op_scale">Skalieren</string>
+    <string name="op_transpose">Transponieren</string>
+    <string name="op_invert">Invertieren</string>
+    <string name="op_determinant">Determinante bestimmen</string>
+    <string name="op_rank">Rang bestimmen</string>
+    <string name="op_toPower">Potenzieren</string>
+        <!-- Navigation-buttons-->
+    <string name="applySelection_button">OK</string>
+    <string name="cancelSelection_button">ZURÜCK</string>
+        <!-- Recylcerlabels-->
+    <string name="label_leftoperand">Linker Operand</string>
+    <string name="label_rightoperand">Rechter Operand</string>
+
+    <!-- MatrixCreationActivity -->
+        <!-- Dimensionselection -->
+    <string name="chooseDimensions_rowslabel">Zeilen</string>
+    <string name="chooseDimensions_colslabel">Spalten</string>
+    <string name="chooseDimensions_applyButton">Anwenden</string>
+    <string name="chooseDimensions_scalarButton">Skalar</string>
+
+    <string name="newMatrix_hintname">Name der Matrix</string>
+    <string name="newMatrix_savebutton">SPEICHERN</string>
+
+        <!-- Fehlermeldungen -->
+    <string name="newMatrix_invalidDimensions">Dimensionen müssen größer als 0 sein</string>
+    <string name="newMatrix_emptyName">Nicht gespeichert: leerer Name</string>
+    <string name="newMatrix_duplicateName">Nicht gespeichert: Duplikater Name</string>
+
+    <string name="newMatrix_success">Matrix gespeichert</string>
 </resources>

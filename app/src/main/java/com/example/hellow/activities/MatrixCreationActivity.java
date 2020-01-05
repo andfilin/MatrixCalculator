@@ -37,7 +37,11 @@ public class MatrixCreationActivity extends AppCompatActivity {
         dbManager = new DBManager(this);
         dbManager.open();
 
-        // build table
+        // set chosen dimensions to 3x3 and build table
+        EditText rowsInput = (EditText) findViewById(R.id.createM_input_rows);
+        EditText colsInput = (EditText) findViewById(R.id.createM_input_cols);
+        rowsInput.setText("3");
+        colsInput.setText("3");
         onApplyClicked(null);
 
     }
@@ -111,7 +115,7 @@ public class MatrixCreationActivity extends AppCompatActivity {
 
         // check for empty inputs
         if(rowsInput.getText().toString().isEmpty() || colsInput.getText().toString().isEmpty()){
-            String msg = "Please enter dimensions > 0";
+            String msg = getResources().getString(R.string.newMatrix_invalidDimensions);
             Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
             toast.show();
             return;
@@ -124,7 +128,7 @@ public class MatrixCreationActivity extends AppCompatActivity {
 
         // check for negative/0 input
         if(this.rowCount <= 0 || this.colCount <= 0){
-            String msg = "Please enter dimensions > 0";
+            String msg = getResources().getString(R.string.newMatrix_invalidDimensions);
             Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
             toast.show();
             return;
@@ -160,7 +164,7 @@ public class MatrixCreationActivity extends AppCompatActivity {
 
         // check if name is empty
         if(name.isEmpty()){
-            String msg = "Nicht gespeichert: leerer Name";
+            String msg = getResources().getString(R.string.newMatrix_emptyName);
             Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
             toast.show();
             return;
@@ -168,7 +172,7 @@ public class MatrixCreationActivity extends AppCompatActivity {
 
         // check if name is already in use
         if(dbManager.nameExists(name)){
-            String msg = "Nicht gespeichert: Duplikater Name";
+            String msg = getResources().getString(R.string.newMatrix_duplicateName);
             Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
             toast.show();
             return;
@@ -191,8 +195,8 @@ public class MatrixCreationActivity extends AppCompatActivity {
 
         dbManager.insert(name, matrix);
 
-
-        Toast toast = Toast.makeText(getApplicationContext(), "Matrix gespeichert", Toast.LENGTH_SHORT);
+        String msg = getResources().getString(R.string.newMatrix_success);
+        Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
         toast.show();
 
 

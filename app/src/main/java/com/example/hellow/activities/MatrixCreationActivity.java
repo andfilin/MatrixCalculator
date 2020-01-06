@@ -193,7 +193,7 @@ public class MatrixCreationActivity extends AppCompatActivity {
         }
 
 
-        dbManager.insert(name, matrix);
+        dbManager.insert_matrix(name, matrix);
 
         String msg = getResources().getString(R.string.newMatrix_success);
         Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);

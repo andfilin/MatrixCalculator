@@ -81,13 +81,15 @@ public class MatrixSelectionActivity extends AppCompatActivity {
                 // set selected Matrix A
                 int selectedIndex_A = ((MatrixSelectionAdapter) recycler_MatA.getAdapter()).getSelectedMatrixPosition();
                 if(selectedIndex_A != -1){
-                    results.putSerializable(EXTRA_RETURN_A, data[selectedIndex_A].getData());
+                    //results.putSerializable(EXTRA_RETURN_A, data[selectedIndex_A].getData());
+                    results.putSerializable(EXTRA_RETURN_A, data[selectedIndex_A]);
                 }
                 // set selected Matrix B - if possible
                 if(recycler_MatB != null){
                     int selectedIndex_B = ((MatrixSelectionAdapter) recycler_MatB.getAdapter()).getSelectedMatrixPosition();
                     if(selectedIndex_B != -1){
-                        results.putSerializable(EXTRA_RETURN_B, data[selectedIndex_B].getData());
+                        //results.putSerializable(EXTRA_RETURN_B, data[selectedIndex_B].getData());
+                        results.putSerializable(EXTRA_RETURN_B, data[selectedIndex_B]);
                     }
                 }
                 // set selected operation

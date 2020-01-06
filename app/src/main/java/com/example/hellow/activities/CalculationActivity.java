@@ -15,6 +15,8 @@ import com.example.hellow.Helper;
 import com.example.hellow.OperationEnum;
 import com.example.hellow.R;
 import com.example.hellow.SelectiontypeEnum;
+import com.example.hellow.sqlite.DBManager;
+import com.example.hellow.sqlite.Matrix;
 
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
@@ -25,10 +27,11 @@ public class CalculationActivity extends AppCompatActivity {
 
     public final static String EXTRA_OPERATION = "extra_operation";
 
-    private double[][] matrix_A = null;
-    private double[][] matrix_B = null;
+    private Matrix matrix_A = null; // todo:replace with Matrix-object
+    private Matrix matrix_B = null;
     private double[][] matrix_Result = null;
     private OperationEnum currentOperation = null;
+
 
     private void updateDisplay(double[][] matA, double[][] matB, double[][] matResult, OperationEnum operation){
 
@@ -52,10 +55,10 @@ public class CalculationActivity extends AppCompatActivity {
     public void doCalculation(View button){
         double[][] result;
 
-        DMatrixRMaj matA = new DMatrixRMaj(this.matrix_A);
+        DMatrixRMaj matA = new DMatrixRMaj(this.matrix_A.getData());
         DMatrixRMaj matB = null;
         if(this.currentOperation.getOperands() != SelectiontypeEnum.SINGLE){
-             matB = new DMatrixRMaj(this.matrix_B);
+             matB = new DMatrixRMaj(this.matrix_B.getData());
         }
         DMatrixRMaj matR = prepareResultmatrix(this.currentOperation, matA, matB);
         if(matR == null){
@@ -79,7 +82,7 @@ public class CalculationActivity extends AppCompatActivity {
                 break;
             // B must be scalar/1x1
             case SCALE:
-                CommonOps_DDRM.scale(this.matrix_B[0][0], matA, matR);
+                CommonOps_DDRM.scale(this.matrix_B.getData()[0][0], matA, matR);
                 break;
             case TRANSPOSE:
                 CommonOps_DDRM.transpose(matA, matR);
@@ -99,7 +102,7 @@ public class CalculationActivity extends AppCompatActivity {
                 break;
             // A must be quadratic, B 1x1
             case TO_POWER:
-                double n = this.matrix_B[0][0];
+                double n = this.matrix_B.getData()[0][0];
                 matR = matA.copy();
                 for(int i = 0; i < n - 1; i++){
                     DMatrixRMaj tmp = matR.copy();
@@ -118,6 +121,31 @@ public class CalculationActivity extends AppCompatActivity {
 
         TextView tv_resultSymbol = (TextView) findViewById(R.id.calculation_equals);
         tv_resultSymbol.setText("" + '=');
+
+
+        // insert operation to db
+        DBManager dbManager = new DBManager(this);
+        dbManager.open();
+
+        String nameB = null;
+        double[][] dataB = null;
+        if(matrix_B !=null){
+            nameB = matrix_B.getName();
+            dataB = matrix_B.getData();
+        }
+
+        dbManager.insert_history(
+                matrix_A.getName(),
+                matrix_A.getData(),
+                nameB,
+                dataB,
+                this.currentOperation,
+                this.matrix_Result
+        );
+
+
+        dbManager.close();
+
     }
 
     /*
@@ -261,8 +289,8 @@ public class CalculationActivity extends AppCompatActivity {
                 Log.e("onResult", "resultOk");
                 // this bundle contains: int[][] EXTRA_RETURN_A,EXTRA_RETURN_B; OperationEnum EXTRA_OPERATION
                 Bundle results = data.getExtras();
-                double[][] returned_A = (double[][]) results.get(MatrixSelectionActivity.EXTRA_RETURN_A);
-                double[][] returned_B = (double[][]) results.get(MatrixSelectionActivity.EXTRA_RETURN_B);
+                Matrix returned_A = (Matrix) results.get(MatrixSelectionActivity.EXTRA_RETURN_A);
+                Matrix returned_B = (Matrix) results.get(MatrixSelectionActivity.EXTRA_RETURN_B);
                 OperationEnum returned_operation = (OperationEnum) results.get(EXTRA_OPERATION);
 
                 // set variables
@@ -271,7 +299,7 @@ public class CalculationActivity extends AppCompatActivity {
                 this.currentOperation = returned_operation;
 
                 // update display
-                updateDisplay(this.matrix_A, this.matrix_B, null, this.currentOperation);
+                updateDisplay(this.matrix_A.getData(), this.matrix_B != null ? this.matrix_B.getData():null, null, this.currentOperation);
 
             }
             if(resultCode == Activity.RESULT_CANCELED){

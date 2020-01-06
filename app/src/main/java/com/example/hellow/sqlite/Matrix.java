@@ -1,8 +1,11 @@
 package com.example.hellow.sqlite;
+
+import java.io.Serializable;
+
 /*
 * Java-Representation of databaserow.
 * */
-public class Matrix {
+public class Matrix implements Serializable {
     private int id;
     private String name;
     private double[][] data;
@@ -42,6 +45,8 @@ public class Matrix {
         this.rows = data.length;
         this.cols = data[0].length;
     }
+
+
 
 
 }

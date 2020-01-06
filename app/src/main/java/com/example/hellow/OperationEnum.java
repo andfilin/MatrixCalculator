@@ -29,7 +29,7 @@ public enum OperationEnum {
     private int value;
     // mathematical symbol, eg. '+'
     private char symbol;
-    // tostring
+    // id of string representing op
     private String stringResourceName;
     // number of operands
     private SelectiontypeEnum operands;
@@ -48,6 +48,18 @@ public enum OperationEnum {
         return (OperationEnum) fromButton_Map.get(buttonId);
     }
 
+    // maps value to corresponding operation.
+    // allows lookup of operation from integer.
+    private static Map fromValue_Map = new HashMap<>();
+    static{
+        for(OperationEnum operation : OperationEnum.values()){
+            fromValue_Map.put(operation.value, operation);
+        }
+    }
+    public static OperationEnum fromInt(int value){
+        return (OperationEnum) fromValue_Map.get(value);
+    }
+
     // private constructor
     private OperationEnum(int value, char symbol, String stringrep, SelectiontypeEnum operands, int button){
         this.value = value;
@@ -58,6 +70,7 @@ public enum OperationEnum {
     }
 
     // getters
+    public int getValue(){return value;}
     public char getSymbol(){
         return symbol;
     };

@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/select_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -88,4 +87,46 @@
         android:text="@string/label_rightoperand"
         app:layout_constraintBottom_toTopOf="@+id/select_B"
         app:layout_constraintStart_toStartOf="@+id/label_A" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/select_guide_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/select_guide_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/select_guide_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/select_guide_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/select_root"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/select_guide_bottom"
+        app:layout_constraintLeft_toRightOf="@+id/select_guide_left"
+        app:layout_constraintRight_toLeftOf="@+id/select_guide_right"
+        app:layout_constraintTop_toBottomOf="@+id/select_guide_top" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

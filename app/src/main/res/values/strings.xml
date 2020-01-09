@@ -25,8 +25,9 @@
     <string name="historyButton">CHRONIK</string>
         <!-- Fehlermeldungen -->
     <string name="addSub_wrongDims">Dimensionen müssen identisch sein</string>
-    <string name="mult_wrongDims">Zeilenzahl Links und Spaltenzahl Rechts müssen identisch sein</string>
+    <string name="mult_wrongDims">Spaltennzahl Links und Zeilenzahl Rechts müssen identisch sein</string>
     <string name="mustBeSquare">Matrix muss quadratisch sein</string>
+    <string name="noSelection">Keine Operation gewählt</string>
 
 
     <!-- MatrixSelectionActivity -->
@@ -46,6 +47,9 @@
         <!-- Recylcerlabels-->
     <string name="label_leftoperand">Linker Operand</string>
     <string name="label_rightoperand">Rechter Operand</string>
+        <!-- Fehlermeldungen -->
+    <string name="operandA_notSelected">Linker Operand nicht gewählt</string>
+    <string name="operandB_notSelected">Rechter Operand nicht gewählt</string>
 
     <!-- MatrixCreationActivity -->
         <!-- Dimensionselection -->
@@ -63,4 +67,11 @@
     <string name="newMatrix_duplicateName">Nicht gespeichert: Duplikater Name</string>
 
     <string name="newMatrix_success">Matrix gespeichert</string>
+
+
+    <!-- MatrixCreationActivity -->
+    <string name="history_saveResult">Ergebnis Speichern</string>
+
+    <string name="symbol_equals">=</string>
+
 </resources>

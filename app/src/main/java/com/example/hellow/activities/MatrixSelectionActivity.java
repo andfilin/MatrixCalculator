@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.hellow.OperationEnum;
 import com.example.hellow.R;
@@ -78,15 +79,33 @@ public class MatrixSelectionActivity extends AppCompatActivity {
             case R.id.select_button_ok:
                 // prepare resultbundle
                 Bundle results = new Bundle();
-                // set selected Matrix A
+
                 int selectedIndex_A = ((MatrixSelectionAdapter) recycler_MatA.getAdapter()).getSelectedMatrixPosition();
+                int selectedIndex_B = -1;
+                if(recycler_MatB != null){
+                    selectedIndex_B = ((MatrixSelectionAdapter) recycler_MatB.getAdapter()).getSelectedMatrixPosition();
+                }
+                // check whether Operand A was selected
+                if(selectedIndex_A == -1){
+                    Toast toast = Toast.makeText(this, getResources().getString(R.string.operandA_notSelected), Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+                // check whether Operand B was selectedand neccesary
+                if(selectedIndex_B == -1 && recycler_MatB != null){
+                    Toast toast = Toast.makeText(this, getResources().getString(R.string.operandB_notSelected), Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+
+
                 if(selectedIndex_A != -1){
                     //results.putSerializable(EXTRA_RETURN_A, data[selectedIndex_A].getData());
                     results.putSerializable(EXTRA_RETURN_A, data[selectedIndex_A]);
                 }
                 // set selected Matrix B - if possible
                 if(recycler_MatB != null){
-                    int selectedIndex_B = ((MatrixSelectionAdapter) recycler_MatB.getAdapter()).getSelectedMatrixPosition();
+                    selectedIndex_B = ((MatrixSelectionAdapter) recycler_MatB.getAdapter()).getSelectedMatrixPosition();
                     if(selectedIndex_B != -1){
                         //results.putSerializable(EXTRA_RETURN_B, data[selectedIndex_B].getData());
                         results.putSerializable(EXTRA_RETURN_B, data[selectedIndex_B]);

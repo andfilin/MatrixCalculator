@@ -7,66 +7,6 @@
     tools:context=".activities.CalculationActivity">
 
 
-    <!--
-    <ScrollView
-        android:id="@+id/scrollA"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <HorizontalScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fillViewport="false">
-
-            <TableLayout
-                android:id="@+id/calculation_A"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center" />
-        </HorizontalScrollView>
-    </ScrollView>
-
-    <ScrollView
-        android:id="@+id/scrollB"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableLayout
-                android:id="@+id/calculation_B"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center" />
-        </HorizontalScrollView>
-    </ScrollView>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    -->
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -85,6 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
+
                 <TableLayout
                     android:id="@+id/calculation_A"
                     android:layout_width="match_parent"
@@ -102,7 +43,6 @@
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
 
                 <TextView
                     android:id="@+id/calculation_op"
@@ -178,106 +118,131 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
 
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/horizontalGuide">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.2" />
 
-            <Button
-                android:id="@+id/calculation_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="doCalculation"
-                android:text="@string/execute_calculation" />
-        </TableRow>
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/calculation_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onOperationSelected"
-                android:text="@string/opButton_add" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/horizontalGuide">
 
-            <Button
-                android:id="@+id/calculation_subtract"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onOperationSelected"
-                android:text="@string/opButton_sub" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
 
-            <Button
-                android:id="@+id/calculation_multiply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onOperationSelected"
-                android:text="@string/opButton_mult" />
-        </TableRow>
+                <Button
+                    android:id="@+id/calculation_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="doCalculation"
+                    android:text="@string/execute_calculation" />
+            </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/calculation_scale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onOperationSelected"
-                android:text="@string/opButton_scale" />
+                <Button
+                    android:id="@+id/calculation_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onOperationSelected"
+                    android:text="@string/opButton_add" />
 
-            <Button
-                android:id="@+id/calculation_transpose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onOperationSelected"
-                android:text="@string/opButton_transpose" />
+                <Button
+                    android:id="@+id/calculation_subtract"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onOperationSelected"
+                    android:text="@string/opButton_sub" />
 
-            <Button
-                android:id="@+id/calculation_invert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onOperationSelected"
-                android:text="@string/opButton_invert" />
-        </TableRow>
+                <Button
+                    android:id="@+id/calculation_multiply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onOperationSelected"
+                    android:text="@string/opButton_mult" />
+            </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/calculation_determinant"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onOperationSelected"
-                android:text="@string/opButton_determinant" />
+                <Button
+                    android:id="@+id/calculation_scale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onOperationSelected"
+                    android:text="@string/opButton_scale" />
 
-            <Button
-                android:id="@+id/calculation_rank"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onOperationSelected"
-                android:text="@string/opButton_rank" />
+                <Button
+                    android:id="@+id/calculation_transpose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onOperationSelected"
+                    android:text="@string/opButton_transpose" />
 
-            <Button
-                android:id="@+id/calculation_topower"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onOperationSelected"
-                android:text="@string/opButton_toPower" />
-        </TableRow>
+                <Button
+                    android:id="@+id/calculation_invert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onOperationSelected"
+                    android:text="@string/opButton_invert" />
+            </TableRow>
 
-    </TableLayout>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/calculation_determinant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onOperationSelected"
+                    android:text="@string/opButton_determinant" />
+
+                <Button
+                    android:id="@+id/calculation_rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onOperationSelected"
+                    android:text="@string/opButton_rank" />
+
+                <Button
+                    android:id="@+id/calculation_topower"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onOperationSelected"
+                    android:text="@string/opButton_toPower" />
+            </TableRow>
+
+        </TableLayout>
+
+        <View
+
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.2" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/calculation_openViewMatrices"
@@ -286,6 +251,7 @@
         android:onClick="navigateButton"
         android:text="@string/viewButton"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/calculation_openCreateMatrix"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -295,6 +261,7 @@
         android:onClick="navigateButton"
         android:text="@string/newButton"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/calculation_openHistory"
         app:layout_constraintStart_toEndOf="@+id/calculation_openViewMatrices" />
 
     <Button
@@ -304,6 +271,7 @@
         android:onClick="navigateButton"
         android:text="@string/historyButton"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/calculation_openCreateMatrix" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,6 +53,15 @@ public class CalculationActivity extends AppCompatActivity {
     }
 
     public void doCalculation(View button){
+
+        if(currentOperation == null){
+            Toast toast = Toast.makeText(this, getResources().getString(R.string.noSelection), Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+
+
+
         double[][] result;
 
         DMatrixRMaj matA = new DMatrixRMaj(this.matrix_A.getData());
@@ -164,10 +173,10 @@ public class CalculationActivity extends AppCompatActivity {
                 }
                 return new DMatrixRMaj(matA.numRows, matA.numCols);
                // break;
-            // a.rows = b.cols
+            // a.cols = b.rows
             // r.rows = a.rows, r.cols = b.cols
             case MULTIPLY:
-                if(matA.numRows != matB.numCols){
+                if(matA.numCols != matB.numRows){
                     displayMessage(getResources().getString(R.string.mult_wrongDims));
                     return null;
                 }
@@ -230,37 +239,9 @@ public class CalculationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculation);
 
-        TableLayout matA = (TableLayout) findViewById(R.id.calculation_A);
-        TableLayout matB = (TableLayout) findViewById(R.id.calculation_B);
-        TableLayout matR = (TableLayout) findViewById(R.id.calculation_R);
-        int[][] data = new int[][] {
-                {1, 2, 3, 4, 5},
-                {1, 2, 3, 4, 5},
-                {1, 2, 3, 4, 5}
-        };
-        int[][] data2 = new int[][] {
-                {1, 2},
-                {1, 2},
-                {1, 2},
-                {1, 2},
-                {1, 2},
-                {1, 2},
-        };
-        int[][] data3 = new int[][] {
-                {1, 2, 4, 5, 6, 7, 7},
-                {1, 2, 4, 5, 6, 7, 7},
-                {1, 2, 4, 5, 6, 7, 7},
-                {1, 2, 4, 5, 6, 7, 7},
-                {1, 2, 4, 5, 6, 7, 7}
-        };
-
-
-
-
+        // initially, show nothing
         updateDisplay(null, null, null, null);
-        /*Helper.fillTable(this, matA, data);
-        Helper.fillTable(this, matB, data2);
-        Helper.fillTable(this, matR, data3);*/
+
     }
 
     /*
@@ -269,6 +250,8 @@ public class CalculationActivity extends AppCompatActivity {
     * one (Transpose, ...) or two (Addition, Multiplication, ...) Matrices from storage.
     * */
     public void onOperationSelected(View button){
+
+
 
         OperationEnum operation = OperationEnum.fromButton(button.getId());
 

@@ -11,6 +11,7 @@ import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,8 @@ public class ViewMatricesAdapter extends RecyclerView.Adapter<ViewMatricesAdapte
 
     private Matrix[] dataset;
     private Context context;
+    private boolean popup_open = false;
+
     public ViewMatricesAdapter(Matrix[] data, Context context){
         this.dataset = data;
         this.context = context;
@@ -51,20 +54,36 @@ public class ViewMatricesAdapter extends RecyclerView.Adapter<ViewMatricesAdapte
     * open a popupwindow showing name and content of a matrix
     * */
     private void showPopup(String name, double[][] matData){
+
+        if(popup_open){
+            return;
+        }
+
         // get root
-        View parent = ((Activity) this.context).findViewById(R.id.view_root);
+        CardView parent = ((Activity) this.context).findViewById(R.id.view_popupParent);
         // inflate xml of popup
         LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_view_matrices, null);
+        View popupView = inflater.inflate(R.layout.popup_view_matrices, parent);
+
+
         // set name
         TextView popup_name = (TextView) popupView.findViewById(R.id.popup_view_name);
         popup_name.setText(name);
         // fill table
         TableLayout popup_table = popupView.findViewById(R.id.popup_view_matrix);
         Helper.fillTable(this.context, popup_table, matData);
-        // show popup
-        final PopupWindow popupWindow = new PopupWindow(popupView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+
+        // onclosebutton
+        ImageButton closebutton = popupView.findViewById(R.id.popup_closebutton);
+        closebutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                parent.removeAllViews();
+                popup_open = false;
+            }
+        });
+
+        popup_open = true;
     }
 
     private void showPopup(int position){

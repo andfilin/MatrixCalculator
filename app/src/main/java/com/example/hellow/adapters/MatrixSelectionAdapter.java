@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,7 @@ public class MatrixSelectionAdapter extends RecyclerView.Adapter<MatrixSelection
 
     private Matrix[] dataset;
     private Context context;
+    private static boolean popup_open = false;
     private int selectedMatrixPosition = -1;
 
 
@@ -59,11 +61,16 @@ public class MatrixSelectionAdapter extends RecyclerView.Adapter<MatrixSelection
      * open a popupwindow showing name and content of a matrix
      * */
     private void showPopup(String name, double[][] matData){
+
+        if(popup_open){
+            return;
+        }
+
         // get root
-        View parent = ((Activity) this.context).findViewById(R.id.select_root);
+        CardView parent = ((Activity) this.context).findViewById(R.id.select_root);
         // inflate xml of popup
         LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_view_matrices, null);
+        View popupView = inflater.inflate(R.layout.popup_view_matrices, parent);
         // set name
         TextView popup_name = (TextView) popupView.findViewById(R.id.popup_view_name);
         popup_name.setText(name);
@@ -71,8 +78,20 @@ public class MatrixSelectionAdapter extends RecyclerView.Adapter<MatrixSelection
         TableLayout popup_table = popupView.findViewById(R.id.popup_view_matrix);
         Helper.fillTable(this.context, popup_table, matData);
         // show popup
-        final PopupWindow popupWindow = new PopupWindow(popupView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+        //final PopupWindow popupWindow = new PopupWindow(popupView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT, true);
+        //popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+
+        // on closebutton
+        ImageButton closebutton = popupView.findViewById(R.id.popup_closebutton);
+        closebutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                parent.removeAllViews();
+                popup_open = false;
+            }
+        });
+
+        popup_open = true;
     }
 
     private void showPopup(int position){

@@ -6,6 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".activities.HistoryActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/history_guide_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/history_guide_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/history_guide_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/history_guide_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/history_reclclerview"
         android:layout_width="match_parent"
@@ -13,4 +41,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/history_popupParent"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/history_guide_bottom"
+        app:layout_constraintLeft_toRightOf="@+id/history_guide_left"
+        app:layout_constraintRight_toLeftOf="@+id/history_guide_right"
+        app:layout_constraintTop_toBottomOf="@+id/history_guide_top" />
+
+
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

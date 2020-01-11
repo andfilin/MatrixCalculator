@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HelloW</string>
+    <string name="app_name">MatrixSolve</string>
     <string name="title_activity_matrix_creation">MatrixCreationActivity</string>
     <!-- Activitytitles-->
     <string name="title_calculationActivity">Rechnen</string>
@@ -28,6 +28,8 @@
     <string name="mult_wrongDims">Spaltennzahl Links und Zeilenzahl Rechts müssen identisch sein</string>
     <string name="mustBeSquare">Matrix muss quadratisch sein</string>
     <string name="noSelection">Keine Operation gewählt</string>
+    <string name="not_a_scalar">Rechter Operand muss Skalar sein</string>
+    <string name="no_inverse">Matrix besitzt keine Inverse</string>
 
 
     <!-- MatrixSelectionActivity -->
@@ -71,6 +73,14 @@
 
     <!-- MatrixCreationActivity -->
     <string name="history_saveResult">Ergebnis Speichern</string>
+
+
+    <!-- ViewMatricActivity -->
+    <string name="goto_delete_button">Löschen</string>
+    <string name="items_deleted_toast">Matrizen gelöscht</string>
+    <string name="item_deleted_toast">Matrix gelöscht</string>
+
+
 
     <string name="symbol_equals">=</string>
 

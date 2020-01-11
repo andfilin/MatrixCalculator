@@ -116,6 +116,14 @@ public class DBManager {
         database.insert(MatDBHelper.TABLE_HISTORY_NAME, null, content);
     }
 
+    public int deleteMatrices(String[] ids){
+        if(ids.length == 0){
+            return 0;
+        }
+        int rowsDeleted = database.delete(MatDBHelper.TABLE_MATRIX_NAME, MatDBHelper.MATRIX_ID + " IN (" + new String(new char[ids.length-1]).replace("\0", "?,") + "?)", ids);
+        return rowsDeleted;
+    }
+
     /*
     * select all rows with all cols and return cursor.
     * */

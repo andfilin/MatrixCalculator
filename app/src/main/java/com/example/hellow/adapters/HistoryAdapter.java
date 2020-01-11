@@ -77,7 +77,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         // prepare content
         // set title
         TextView titleTv = (TextView) popupView.findViewById(R.id.history_popup_title);
-        String title = entry.getLeftName() + " " + entry.getOperation().getSymbol() + " " +  entry.getRightName();
+        String title = entry.getLeftName() + " " + entry.getOperation().getSymbol() + " " +  (entry.getRightName() != null ? entry.getRightName() : "");
         titleTv.setText(title);
 
         // fill tables

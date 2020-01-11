@@ -6,6 +6,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TableLayout;
@@ -19,15 +21,30 @@ import com.example.hellow.Helper;
 import com.example.hellow.R;
 import com.example.hellow.sqlite.Matrix;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ViewMatricesAdapter extends RecyclerView.Adapter<ViewMatricesAdapter.ViewHolder>{
 
     private Matrix[] dataset;
     private Context context;
     private boolean popup_open = false;
 
+    List<String> checkedIds = new ArrayList<>();
+
     public ViewMatricesAdapter(Matrix[] data, Context context){
         this.dataset = data;
         this.context = context;
+    }
+
+    public List<String> getCheckedIds(){
+        return checkedIds;
+    }
+
+    public void setDataset(Matrix[] newDataset){
+        this.dataset = newDataset;
+        this.checkedIds.clear();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -42,7 +59,11 @@ public class ViewMatricesAdapter extends RecyclerView.Adapter<ViewMatricesAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         Matrix matrix = dataset[position];
         holder.itemName.setText(matrix.getName());
+        holder.itemName.setChecked(false);
+
+
         holder.dimensions.setText(matrix.dimensionsString());
+        holder.databaseId = matrix.getId();
     }
 
     @Override
@@ -94,9 +115,10 @@ public class ViewMatricesAdapter extends RecyclerView.Adapter<ViewMatricesAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView itemName;
+        public CheckBox itemName;
         public TextView dimensions;
         public ImageButton viewMatrixButton;
+        public int databaseId;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -109,6 +131,21 @@ public class ViewMatricesAdapter extends RecyclerView.Adapter<ViewMatricesAdapte
                     showPopup(getAdapterPosition());
                 }
             });
+
+            // when checked, add to list; when unchecked, remove from list
+            itemName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        checkedIds.add(databaseId + "");
+                    }else{
+                        checkedIds.remove(databaseId + "");
+                    }
+                }
+            });
+
+
 
         }
 

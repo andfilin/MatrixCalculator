@@ -74,6 +74,9 @@ public class CalculationActivity extends AppCompatActivity {
             return;
         }
 
+        double rank;
+        double det;
+
         switch(this.currentOperation){
             // rows, cols must match
             case ADD:
@@ -98,15 +101,21 @@ public class CalculationActivity extends AppCompatActivity {
                 break;
             // must check invertible
             case INVERT:
+                // if det == 0, no Inverse exists
+                det = CommonOps_DDRM.det(matA);
+                if(det == 0){
+                    displayMessage(getResources().getString(R.string.no_inverse));
+                    return;
+                }
                 CommonOps_DDRM.invert(matA, matR);
                 break;
 
             case DETERMINANT:
-                double det = CommonOps_DDRM.det(matA);
+                det = CommonOps_DDRM.det(matA);
                 matR.set(0, 0, det);
                 break;
             case RANK:
-                double rank = MatrixFeatures_DDRM.rank(matA);
+                rank = MatrixFeatures_DDRM.rank(matA);
                 matR.set(0, 0, rank);
                 break;
             // A must be quadratic, B 1x1
@@ -195,6 +204,7 @@ public class CalculationActivity extends AppCompatActivity {
             case TRANSPOSE:
                 return new DMatrixRMaj(matA.numCols, matA.numRows);
             case INVERT:
+
                 if (matA.numRows != matA.numCols) {
                     displayMessage(getResources().getString(R.string.mustBeSquare));
                     return null;
@@ -218,6 +228,10 @@ public class CalculationActivity extends AppCompatActivity {
             case TO_POWER:
                 if (matA.numRows != matA.numCols) {
                     displayMessage(getResources().getString(R.string.mustBeSquare));
+                    return null;
+                }
+                if (matB.numRows != 1 || matB.numCols != 1) {
+                    displayMessage(getResources().getString(R.string.not_a_scalar));
                     return null;
                 }
                 return new DMatrixRMaj(matA.numRows, matA.numCols);

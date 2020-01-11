@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/msolve"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -13,7 +13,7 @@
         <activity
             android:name=".activities.HistoryActivity"
             android:label="@string/title_historyActivity"/>
-            >
+
         <activity
             android:name=".activities.MatrixSelectionActivity"
 
@@ -29,7 +29,6 @@
         <activity
             android:name=".activities.ViewMatricesActivity"
             android:label="@string/title_viewActivity"/>
-            />
         <activity android:name=".activities.MatrixCreationActivity"
             android:label="@string/title_creationActivity"/>
     </application>

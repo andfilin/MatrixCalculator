@@ -2,19 +2,16 @@ package com.example.hellow.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hellow.Helper;
@@ -24,6 +21,9 @@ import com.example.hellow.sqlite.Matrix;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+* Used in ViewMatricesActivity.
+* */
 public class ViewMatricesAdapter extends RecyclerView.Adapter<ViewMatricesAdapter.ViewHolder>{
 
     private Matrix[] dataset;
@@ -103,6 +103,7 @@ public class ViewMatricesAdapter extends RecyclerView.Adapter<ViewMatricesAdapte
                 popup_open = false;
             }
         });
+
 
         popup_open = true;
     }

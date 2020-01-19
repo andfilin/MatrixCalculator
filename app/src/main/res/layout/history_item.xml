@@ -19,7 +19,6 @@
             android:id="@+id/histItem_nameA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +26,6 @@
             android:id="@+id/histItem_dimsA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/histItem_nameA" />
     </LinearLayout>
@@ -56,7 +54,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:text="TextView"
             app:layout_constraintStart_toEndOf="@+id/histItem_operation"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +61,6 @@
             android:id="@+id/histItem_dimsB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
             app:layout_constraintStart_toStartOf="@+id/histItem_nameB"
             app:layout_constraintTop_toBottomOf="@+id/histItem_nameB" />
     </LinearLayout>

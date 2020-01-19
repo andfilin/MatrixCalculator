@@ -30,7 +30,6 @@ public class DBManager {
     public DBManager open(){
         matDBHelper = new MatDBHelper(context);
         database = matDBHelper.getWritableDatabase();
-        //matDBHelper.onUpgrade(database, 1, 1);
         return this;
     }
     /*
@@ -39,6 +38,8 @@ public class DBManager {
     public void close(){
         matDBHelper.close();
     }
+
+
     /*
     * serialize an Object to Byte[],
     * can be saved as BLOB in DB.
@@ -49,7 +50,7 @@ public class DBManager {
             ObjectOutputStream os = new ObjectOutputStream(out);
             os.writeObject(ob);
         } catch (IOException e) {
-            e.printStackTrace();    // todo: output error to user?
+            e.printStackTrace();
         }
         return out.toByteArray();
     }
@@ -67,7 +68,7 @@ public class DBManager {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace(); // todo: show error to user
+            e.printStackTrace();
         }
         return result;
     }
@@ -249,34 +250,4 @@ public class DBManager {
 
 
     }
-
-    /*
-    * todo: unused
-    *
-    * */
-    public Cursor find(String name){
-        String[] names = new String[] {name};
-        String[] cols = new String[] {MatDBHelper.MATRIX_ID, MatDBHelper.MATRIX_NAME, MatDBHelper.MATRIX_DATA,};
-        Cursor cursor = database.query(MatDBHelper.TABLE_MATRIX_NAME, cols, MatDBHelper.MATRIX_NAME, names, null, null, null);
-        if(cursor != null){
-            cursor.moveToFirst();
-        }
-        return cursor;
-    }
-
-    public void delete(long id){
-        database.delete(MatDBHelper.TABLE_MATRIX_NAME, MatDBHelper.MATRIX_ID + "=" + id, null);
-    }
-
-    public String MatToString(int[][] mat){
-        String res = "";
-        for(int[] row : mat){
-            for(int i : row){
-                res += i + "\t";
-            }
-            res += "\n";
-        }
-        return res;
-    }
-
 }

@@ -6,18 +6,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.hellow.R;
-import com.example.hellow.adapters.HistoryAdapter;
 import com.example.hellow.adapters.ViewMatricesAdapter;
 import com.example.hellow.sqlite.DBManager;
 import com.example.hellow.sqlite.Matrix;
 
 import java.util.List;
 
+/*
+* User can look at saved Matrices here, and delete them.
+* */
 public class ViewMatricesActivity extends AppCompatActivity {
 
     private ViewMatricesAdapter viewAdapter;
@@ -33,8 +34,6 @@ public class ViewMatricesActivity extends AppCompatActivity {
         Matrix[] data = dbManager.getAll();
         dbManager.close();
 
-
-
         // prepare recyclerview
         RecyclerView rView = (RecyclerView) findViewById(R.id.viewMatrices_recyclerview);
         rView.setLayoutManager(new LinearLayoutManager(this));
@@ -49,10 +48,12 @@ public class ViewMatricesActivity extends AppCompatActivity {
 
     }
 
+    /*
+    * delete all checked matrices from db and refresh recyclerview.
+    * */
     public void onDeleteButton(View button){
+        // get ids of checked matrices as strings
         List<String> checkedIds = viewAdapter.getCheckedIds();
-
-
         // delete data
         DBManager dbManager = new DBManager(this);
         dbManager.open();
@@ -65,11 +66,8 @@ public class ViewMatricesActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
         toast.show();
-
+        // notify recycler
         viewAdapter.notifyDataSetChanged();
-
-
-
     }
 
 

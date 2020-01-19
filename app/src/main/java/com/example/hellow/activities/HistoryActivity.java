@@ -6,18 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.hellow.R;
 import com.example.hellow.adapters.HistoryAdapter;
-import com.example.hellow.adapters.ViewMatricesAdapter;
 import com.example.hellow.sqlite.DBManager;
 import com.example.hellow.sqlite.HistoryEntry;
-import com.example.hellow.sqlite.Matrix;
-
-// todo: recyclerview showing historyentrys
-//          popup for saving result to main memory
-//          maybe delete history after app closes
+/*
+* User can look at executed operations, save results to Matrix-table.
+* */
 public class HistoryActivity extends AppCompatActivity {
 
     @Override
@@ -25,6 +21,7 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
+        // get data from db
         DBManager dbManager = new DBManager(this);
         dbManager.open();
         HistoryEntry[] history = dbManager.getHistory();
@@ -40,7 +37,5 @@ public class HistoryActivity extends AppCompatActivity {
         // add decoration
         DividerItemDecoration itemDecor = new DividerItemDecoration(rView.getContext(), DividerItemDecoration.VERTICAL);
         rView.addItemDecoration(itemDecor);
-
-
     }
 }

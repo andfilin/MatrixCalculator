@@ -2,24 +2,24 @@ package com.example.hellow.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hellow.Helper;
 import com.example.hellow.R;
 import com.example.hellow.sqlite.Matrix;
 
+/*
+* Used in MatrixSelectionActivity.
+* */
 public class MatrixSelectionAdapter extends RecyclerView.Adapter<MatrixSelectionAdapter.ViewHolder>{
 
     private Matrix[] dataset;
@@ -77,9 +77,6 @@ public class MatrixSelectionAdapter extends RecyclerView.Adapter<MatrixSelection
         // fill table
         TableLayout popup_table = popupView.findViewById(R.id.popup_view_matrix);
         Helper.fillTable(this.context, popup_table, matData);
-        // show popup
-        //final PopupWindow popupWindow = new PopupWindow(popupView, ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT, true);
-        //popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 
         // on closebutton
         ImageButton closebutton = popupView.findViewById(R.id.popup_closebutton);

@@ -3,7 +3,7 @@ package com.example.hellow.sqlite;
 import java.io.Serializable;
 
 /*
-* Java-Representation of databaserow.
+* Represents row of table 'Matrix'.
 * */
 public class Matrix implements Serializable {
     private int id;

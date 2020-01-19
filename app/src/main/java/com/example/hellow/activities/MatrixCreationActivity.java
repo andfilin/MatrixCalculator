@@ -23,9 +23,6 @@ public class MatrixCreationActivity extends AppCompatActivity {
 
     private DBManager dbManager;
 
-    // keeps track of currently input Matrix
-    // private double[][] newMatrix;
-
     // keep track of chosen dimensions
     private int rowCount;
     private int colCount;
@@ -35,7 +32,6 @@ public class MatrixCreationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matrix_creation);
         dbManager = new DBManager(this);
-        dbManager.open();
 
         // set chosen dimensions to 3x3 and build table
         EditText rowsInput = (EditText) findViewById(R.id.createM_input_rows);
@@ -43,9 +39,25 @@ public class MatrixCreationActivity extends AppCompatActivity {
         rowsInput.setText("3");
         colsInput.setText("3");
         onApplyClicked(null);
-
     }
 
+    // open db on resume, and close it on Pause
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dbManager.open();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dbManager.close();
+    }
+
+    /*
+    * Initializes table where user inputs matrixvalues with chosen number of edittexts
+    * */
     private void initCreationTable(int rows, int cols){
         final int valueWidth = MATRIXVALUE_WIDTH;
         TableLayout table = (TableLayout) findViewById(R.id.CreateMatrix_Table);
@@ -71,31 +83,9 @@ public class MatrixCreationActivity extends AppCompatActivity {
 
 
                 valInput.setEms(10);
-                valInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                valInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL |InputType.TYPE_NUMBER_FLAG_SIGNED);
 
-                // when value changes, update int[][] newMatrix
                 final int row = currentRow, col = currentCol;
-               /* valInput.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        //Log.e("asd", "" + s);
-                        if(s.length() != 0) {
-                            newMatrix[row][col] = Double.parseDouble(s.toString());
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });*/
-
-
-
 
                 // add edittext to row
                 tr.addView(valInput);

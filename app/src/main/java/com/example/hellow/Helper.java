@@ -3,9 +3,6 @@ package com.example.hellow;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.icu.text.DecimalFormat;
-import android.icu.text.NumberFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -19,12 +16,12 @@ import org.ejml.data.DMatrixRMaj;
 import java.util.Locale;
 
 /*
-* various static helperfunctions
+* various static helperfunctions.
 * */
 public class Helper {
 
     /*
-    * Update an TableLayout to display an double[][]
+    * Update a TableLayout to display a double[][].
     * */
     public static void fillTable(Context context, TableLayout table, double[][] matData){
 
@@ -67,29 +64,12 @@ public class Helper {
             table.addView(tr);
         }
 
-        // table.setBackground??
         table.setBackgroundResource(R.drawable.matrixborder);
-
-        // debug: getChildCount
-        View rootView = ((Activity)context).getWindow().getDecorView().findViewById(android.R.id.content);
-        int viewCount = getChildrenViews((ViewGroup) table);
-        Log.e("asd", "viewCount: " + viewCount);
-
     }
 
-
-    public static int getChildrenViews(ViewGroup parent){
-        int count = parent.getChildCount();
-        for (int i=0;i<parent.getChildCount();i++){
-            if (parent.getChildAt(i) instanceof ViewGroup){
-                count+=getChildrenViews((ViewGroup) parent.getChildAt(i));
-            }
-        }
-        return count;
-    }
-
-
-
+    /*
+    * converts ejml-matrixobject to double[][]
+    * */
     public static double[][] mat_to_2dArray(DMatrixRMaj mat){
         int rows = mat.numRows;
         int cols = mat.numCols;

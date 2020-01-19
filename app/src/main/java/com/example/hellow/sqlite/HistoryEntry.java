@@ -2,6 +2,9 @@ package com.example.hellow.sqlite;
 
 import com.example.hellow.OperationEnum;
 
+/*
+* Represents row of table 'Chronik'
+* */
 public class HistoryEntry {
     private String leftName;
     private double[][] leftData;

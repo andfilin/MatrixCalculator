@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">MatrixSolve</string>
-    <string name="title_activity_matrix_creation">MatrixCreationActivity</string>
     <!-- Activitytitles-->
     <string name="title_calculationActivity">Rechnen</string>
     <string name="title_creationActivity">Neue Matrix</string>

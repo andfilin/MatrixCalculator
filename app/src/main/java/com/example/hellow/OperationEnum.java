@@ -22,7 +22,6 @@ public enum OperationEnum {
     DETERMINANT(102, 'D', "op_determinant", SelectiontypeEnum.SINGLE, R.id.calculation_determinant),
     RANK(103, 'R', "op_rank", SelectiontypeEnum.SINGLE, R.id.calculation_rank),
     TO_POWER(104, '^', "op_toPower", SelectiontypeEnum.SCALAR, R.id.calculation_topower),
-
     ;
 
     // private value
@@ -61,7 +60,7 @@ public enum OperationEnum {
     }
 
     // private constructor
-    private OperationEnum(int value, char symbol, String stringrep, SelectiontypeEnum operands, int button){
+    OperationEnum(int value, char symbol, String stringrep, SelectiontypeEnum operands, int button){
         this.value = value;
         this.symbol = symbol;
         this.stringResourceName = stringrep;
@@ -70,10 +69,12 @@ public enum OperationEnum {
     }
 
     // getters
-    public int getValue(){return value;}
+    public int getValue(){
+        return value;
+    }
     public char getSymbol(){
         return symbol;
-    };
+    }
     public SelectiontypeEnum getOperands(){
         return operands;
     }

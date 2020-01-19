@@ -21,85 +21,85 @@ import com.example.hellow.sqlite.Matrix;
 import org.ejml.data.DMatrixRMaj;
 import org.ejml.dense.row.CommonOps_DDRM;
 import org.ejml.dense.row.MatrixFeatures_DDRM;
-import org.ejml.simple.SimpleMatrix;
-
+/*
+* Mainactivity.
+* User can choose and execute Operation.
+* */
 public class CalculationActivity extends AppCompatActivity {
-
+    // Extra-key for giving chosen operation to MatrixselectionActivity
     public final static String EXTRA_OPERATION = "extra_operation";
-
-    private Matrix matrix_A = null; // todo:replace with Matrix-object
+    // currently chosen Operands, Operation and Result
+    private Matrix matrix_A = null;
     private Matrix matrix_B = null;
     private double[][] matrix_Result = null;
     private OperationEnum currentOperation = null;
 
-
+    /*
+    * Displays chosen Operands, Operation, Result in upper half of screen.
+    * */
     private void updateDisplay(double[][] matA, double[][] matB, double[][] matResult, OperationEnum operation){
-
+        // get all Views to update
         TableLayout table_matA = (TableLayout) findViewById(R.id.calculation_A);
         TableLayout table_matB = (TableLayout) findViewById(R.id.calculation_B);
         TableLayout table_matResult = (TableLayout) findViewById(R.id.calculation_R);
         TextView tv_operation = (TextView) findViewById(R.id.calculation_op);
         TextView tv_resultSymbol = (TextView) findViewById(R.id.calculation_equals);
-
+        // fill tables with matrices
         Helper.fillTable(this, table_matA, matA);
         Helper.fillTable(this, table_matB, matB);
         Helper.fillTable(this, table_matResult, matResult);
-
+        // set operation-symbol
         char opSymbol = operation != null ? operation.getSymbol() : ' ';
         tv_operation.setText("" + opSymbol);
-
+        // set '='
         char resultSymbol = matResult != null ? '=' : ' ';
         tv_resultSymbol.setText("" + resultSymbol);
     }
-
+    /*
+    * callback for 'Ausfuehren'-Button.
+    * does various checks, calculates result, updates display.
+    * */
     public void doCalculation(View button){
-
+        // check whether any operation chosen
         if(currentOperation == null){
             Toast toast = Toast.makeText(this, getResources().getString(R.string.noSelection), Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
 
-
-
         double[][] result;
-
+        // prepare ejml-matrices
         DMatrixRMaj matA = new DMatrixRMaj(this.matrix_A.getData());
         DMatrixRMaj matB = null;
         if(this.currentOperation.getOperands() != SelectiontypeEnum.SINGLE){
              matB = new DMatrixRMaj(this.matrix_B.getData());
         }
+        // initialize ejml-matrix to hold result with correct dimensions
         DMatrixRMaj matR = prepareResultmatrix(this.currentOperation, matA, matB);
         if(matR == null){
+            // if prepareResultmatrix() returns null, dimensions of operands do not fit operation
             return;
         }
 
         double rank;
         double det;
-
+        // make calculation
         switch(this.currentOperation){
-            // rows, cols must match
             case ADD:
                 CommonOps_DDRM.add(matA,matB,matR);
                 break;
             case SUBTRACT:
                 CommonOps_DDRM.subtract(matA,matB,matR);
                 break;
-            // sthm must match
             case MULTIPLY:
-                // assert a.numcols == b.numrows
-                int resRows = matA.numRows;
-                int resCols = matB.numCols;
                 CommonOps_DDRM.mult(matA,matB,matR);
                 break;
-            // B must be scalar/1x1
             case SCALE:
                 CommonOps_DDRM.scale(this.matrix_B.getData()[0][0], matA, matR);
                 break;
             case TRANSPOSE:
                 CommonOps_DDRM.transpose(matA, matR);
                 break;
-            // must check invertible
             case INVERT:
                 // if det == 0, no Inverse exists
                 det = CommonOps_DDRM.det(matA);
@@ -109,7 +109,6 @@ public class CalculationActivity extends AppCompatActivity {
                 }
                 CommonOps_DDRM.invert(matA, matR);
                 break;
-
             case DETERMINANT:
                 det = CommonOps_DDRM.det(matA);
                 matR.set(0, 0, det);
@@ -118,7 +117,6 @@ public class CalculationActivity extends AppCompatActivity {
                 rank = MatrixFeatures_DDRM.rank(matA);
                 matR.set(0, 0, rank);
                 break;
-            // A must be quadratic, B 1x1
             case TO_POWER:
                 double n = this.matrix_B.getData()[0][0];
                 matR = matA.copy();
@@ -126,22 +124,22 @@ public class CalculationActivity extends AppCompatActivity {
                     DMatrixRMaj tmp = matR.copy();
                     CommonOps_DDRM.mult(tmp, matA, matR);
                 }
-                //matR = res;
                 break;
         }
 
-
+        // convert ejml-matrixobject to 2d-doubblearray
         result = Helper.mat_to_2dArray(matR);
         this.matrix_Result = result;
 
+        // display result
         TableLayout table_matResult = (TableLayout) findViewById(R.id.calculation_R);
         Helper.fillTable(this, table_matResult, result);
-
+        // disply '='
         TextView tv_resultSymbol = (TextView) findViewById(R.id.calculation_equals);
         tv_resultSymbol.setText("" + '=');
 
 
-        // insert operation to db
+        // save operation and matrices to history-dbtable
         DBManager dbManager = new DBManager(this);
         dbManager.open();
 
@@ -160,7 +158,6 @@ public class CalculationActivity extends AppCompatActivity {
                 this.currentOperation,
                 this.matrix_Result
         );
-
 
         dbManager.close();
 
@@ -195,7 +192,7 @@ public class CalculationActivity extends AppCompatActivity {
             // r.dims = a.dims
             case SCALE:
                 if (matB.data.length > 1) {
-                    displayMessage("scale: b not a scalar");
+                    displayMessage(getResources().getString(R.string.not_a_scalar));
                     return null;
                 }
                 return new DMatrixRMaj(1, 1);
@@ -241,7 +238,9 @@ public class CalculationActivity extends AppCompatActivity {
                 return null;
         }
     }
-
+    /*
+    * display toast.
+    * */
     private void displayMessage(String msg){
         Log.e("asd", msg);
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
@@ -255,7 +254,6 @@ public class CalculationActivity extends AppCompatActivity {
 
         // initially, show nothing
         updateDisplay(null, null, null, null);
-
     }
 
     /*
@@ -264,9 +262,7 @@ public class CalculationActivity extends AppCompatActivity {
     * one (Transpose, ...) or two (Addition, Multiplication, ...) Matrices from storage.
     * */
     public void onOperationSelected(View button){
-
-
-
+        // get operation from id of pressed button
         OperationEnum operation = OperationEnum.fromButton(button.getId());
 
         // start MatrixSelectionActivity, give selected operation in intent
@@ -276,14 +272,12 @@ public class CalculationActivity extends AppCompatActivity {
     }
 
     /*
-    * On return from MatrixSelectionActivity, set Matrix
+    * On return from MatrixSelectionActivity, set chosen operands and operation.
     * */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == 1){
             if(resultCode == Activity.RESULT_OK){
-
-                Log.e("onResult", "resultOk");
                 // this bundle contains: int[][] EXTRA_RETURN_A,EXTRA_RETURN_B; OperationEnum EXTRA_OPERATION
                 Bundle results = data.getExtras();
                 Matrix returned_A = (Matrix) results.get(MatrixSelectionActivity.EXTRA_RETURN_A);
@@ -300,14 +294,17 @@ public class CalculationActivity extends AppCompatActivity {
 
             }
             if(resultCode == Activity.RESULT_CANCELED){
-                Log.e("onResult", "resultCacneled");
+                Log.e("onResult", "resultCanceled");
             }
-
         }
     }
-
+    /*
+    * callback for buttons leading to other Actiivities
+    * (ViewMatricesActivity, MatrixCreationActivity, HistoryActivity)
+    * */
     public void navigateButton(View button){
         Intent intent = null;
+        // start activty depending on id of pressedd button
         switch (button.getId()){
             case R.id.calculation_openViewMatrices:
                 intent = new Intent(this, ViewMatricesActivity.class);
@@ -324,10 +321,4 @@ public class CalculationActivity extends AppCompatActivity {
         }
 
     }
-
-
-
-
-
-
 }

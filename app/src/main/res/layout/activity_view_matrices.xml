@@ -7,17 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.ViewMatricesActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/view_popupParent"
-        android:layout_width="0dp"
-
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/view_guide_bottom"
-        app:layout_constraintLeft_toRightOf="@+id/view_guide_left"
-        app:layout_constraintRight_toLeftOf="@+id/view_guide_right"
-
-        app:layout_constraintTop_toBottomOf="@+id/view_guide_top" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/viewMatrices_recyclerview"
         android:layout_width="match_parent"
@@ -74,6 +63,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewMatrices_recyclerview" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/view_popupParent"
+        android:layout_width="0dp"
+
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/view_guide_bottom"
+        app:layout_constraintLeft_toRightOf="@+id/view_guide_left"
+        app:layout_constraintRight_toLeftOf="@+id/view_guide_right"
+
+        app:layout_constraintTop_toBottomOf="@+id/view_guide_top" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

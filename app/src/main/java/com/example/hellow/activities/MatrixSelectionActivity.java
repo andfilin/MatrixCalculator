@@ -18,7 +18,9 @@ import com.example.hellow.adapters.MatrixSelectionAdapter;
 import com.example.hellow.sqlite.DBManager;
 import com.example.hellow.sqlite.Matrix;
 
-
+/*
+* After operation is chosen, user can choose operands here.
+* */
 public class MatrixSelectionActivity extends AppCompatActivity {
 
     public static final String EXTRA_RETURN_A = "extra_return_A";
@@ -91,7 +93,7 @@ public class MatrixSelectionActivity extends AppCompatActivity {
                     toast.show();
                     return;
                 }
-                // check whether Operand B was selectedand neccesary
+                // check whether Operand B was selected and neccesary
                 if(selectedIndex_B == -1 && recycler_MatB != null){
                     Toast toast = Toast.makeText(this, getResources().getString(R.string.operandB_notSelected), Toast.LENGTH_SHORT);
                     toast.show();
@@ -121,6 +123,7 @@ public class MatrixSelectionActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
                 break;
+
             case R.id.select_button_cancel:
                 // return without results
                 setResult(Activity.RESULT_CANCELED);
@@ -128,58 +131,4 @@ public class MatrixSelectionActivity extends AppCompatActivity {
                 break;
         }
     }
-
-    private Bundle setResults(int[][] selectionA){
-        Bundle results = new Bundle();
-        results.putSerializable(EXTRA_RETURN_A, selectionA);
-        return results;
-    }
-
-    private Bundle setResults(int[][] selectionA, int[][] selectionB){
-        Bundle results = setResults(selectionA);
-        results.putSerializable(EXTRA_RETURN_B, selectionB);
-        return results;
-    }
-
-
-
-    private Bundle generateReturn(SelectiontypeEnum selectType){
-
-        Bundle results = new Bundle();
-
-        int[][] m1 = new int[][] {
-                {1, 2, 3},
-                {1, 2, 3},
-                {1, 2, 3}
-        };
-
-        int[][] m2 = new int[][] {
-                {3},
-                {3},
-                {3}
-        };
-
-        int[][] s1 = new int[][]{
-                {5}
-        };
-
-        switch (selectType){
-            case TWO:
-                results.putSerializable(EXTRA_RETURN_A, m1);
-                results.putSerializable(EXTRA_RETURN_B, m2);
-                break;
-            case SINGLE:
-                results.putSerializable(EXTRA_RETURN_A, m1);
-                break;
-            case SCALAR:
-                results.putSerializable(EXTRA_RETURN_A, s1);
-                results.putSerializable(EXTRA_RETURN_B, m2);
-                break;
-        }
-
-        return results;
-
-
-    }
-
 }
